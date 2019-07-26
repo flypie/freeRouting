@@ -33,7 +33,6 @@ public class ItemIdNoGenerator implements datastructures.IdNoGenerator, java.io.
      */
     public ItemIdNoGenerator()
     {
-        last_generated_id_no = 0;
     }
     
     /**
