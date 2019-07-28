@@ -208,5 +208,5 @@ public class MainApplication extends javax.swing.JFrame
     /**
      * Change this string when creating a new version
      */
-    static final String VERSION_NUMBER_STRING = "1.3.1y";
+    static final String VERSION_NUMBER_STRING = "1.3.2α";
 }
