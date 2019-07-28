@@ -200,7 +200,7 @@ public class Logfile
         {
             try
             {
-                this.file_writer.write((new Integer(p_int)).toString());
+                this.file_writer.write((Integer.valueOf(p_int)).toString()); //Ontobus
                 this.file_writer.write("\n");
             }
             catch (IOException e2)
@@ -240,9 +240,9 @@ public class Logfile
             }
             try
             {
-                this.file_writer.write((new Double(p_corner.x)).toString());
+                this.file_writer.write((Double.valueOf(p_corner.x)).toString());  //Ontobus
                 this.file_writer.write(" ");
-                this.file_writer.write((new Double(p_corner.y)).toString());
+                this.file_writer.write((Double.valueOf(p_corner.y)).toString());  //Ontobus
                 this.file_writer.write("\n");
             }
             catch (IOException e2)

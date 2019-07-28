@@ -631,6 +631,9 @@ public class LineSegment implements java.io.Serializable
      * With 2 intersections the intersection which is nearest to the start
      * point of the line segment comes first.
      */
+    
+    private static final int MaxIntersections = 2;
+    
     public int[] border_intersections(TileShape p_shape)
     {
         int[] empty_result = new int[0];
@@ -642,14 +645,13 @@ public class LineSegment implements java.io.Serializable
         int edge_count = p_shape.border_line_count();
         Line prev_line = p_shape.border_line(edge_count - 1);
         Line curr_line = p_shape.border_line(0);
-        int[] result = new int[2];
-        Point[] intersection = new Point[2];
+        int[] result = new int[MaxIntersections];
+        Point[] intersection = new Point[MaxIntersections];
         int intersection_count = 0;
         Point line_start = this.start_point();
         Point line_end = this.end_point();
 
-        for (int edge_line_no = 0; edge_line_no <
-                edge_count; ++edge_line_no)
+        for (int edge_line_no = 0; edge_line_no < edge_count; ++edge_line_no) //Ontobus
         {
             Line next_line;
             if (edge_line_no == edge_count - 1)
@@ -775,47 +777,38 @@ public class LineSegment implements java.io.Serializable
                         if (prev_corner_side == Side.COLLINEAR ||
                                 next_next_corner_side == Side.COLLINEAR ||
                                 prev_corner_side == next_next_corner_side)
-                        {
+                        {                           
                             return empty_result;
                         }
 
                     }
                     boolean intersection_already_handeled = false;
-                    for (int i = 0; i <
-                            intersection_count; ++i)
+                    
+                    if(intersection_count!=0)
                     {
-                        if (is.equals(intersection[i]))
+                        if (is.equals(intersection[0]))
                         {
                             intersection_already_handeled = true;
-                            break;
-
                         }
-
-
-
-
                     }
+                    
                     if (!intersection_already_handeled)
                     {
-                        if (intersection_count < result.length)
-                        {
-                            // a new intersection is found
-                            result[intersection_count] = edge_line_no;
-                            intersection[intersection_count] = is;
-                            ++intersection_count;
-                        }
-                        else
-                        {
-                            System.out.println("border_intersections: intersection_count to big!");
-                        }
+                        // a new intersection is found
+                        result[intersection_count] = edge_line_no;
+                        intersection[intersection_count] = is;
+                        ++intersection_count;
 
+                        if(intersection_count==MaxIntersections) //Ontobus
+                        {
+                            break;
+                        }
                     }
                 }
             }
 
             prev_line = curr_line;
-            curr_line =
-                    next_line;
+            curr_line = next_line;
         }
 
         if (intersection_count == 0)
@@ -878,4 +871,4 @@ public class LineSegment implements java.io.Serializable
     private final Line end;
     transient private Point precalculated_start_point = null;
     transient private Point precalculated_end_point = null;
-}
+ }
