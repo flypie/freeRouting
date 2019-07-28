@@ -40,7 +40,7 @@ public class OtherColorTableModel extends ColorTableModel implements java.io.Ser
         curr_row[ColumnNames.BACKGROUND.ordinal()] = new Color(0, 0, 0);
         curr_row[ColumnNames.HIGHLIGHT.ordinal()] = new Color(230,255,255);
         curr_row[ColumnNames.INCOMPLETES.ordinal()] = Color.white;
-        if (this.whiteBackground) {
+        if (OtherColorTableModel.whiteBackground) {
             curr_row[ColumnNames.BACKGROUND.ordinal()] = new Color(255, 255, 255);
             curr_row[ColumnNames.HIGHLIGHT.ordinal()] = new Color(0,235,255);
             curr_row[ColumnNames.INCOMPLETES.ordinal()] = Color.black;
@@ -72,11 +72,13 @@ public class OtherColorTableModel extends ColorTableModel implements java.io.Ser
     }
     
     
+    @Override
     public int getColumnCount()
     {
         return ColumnNames.values().length;
     }
     
+    @Override
     public String getColumnName(int p_col)
     {
         java.util.ResourceBundle resources = 
@@ -84,6 +86,7 @@ public class OtherColorTableModel extends ColorTableModel implements java.io.Ser
         return resources.getString(ColumnNames.values()[p_col].toString());
     }
     
+    @Override
     public boolean isCellEditable(int p_row, int p_col)
     {
         return true;

@@ -56,18 +56,19 @@ public class ShapeSearchTree90Degree extends ShapeSearchTree
      * which intersect with p_room.get_contained_shape().
      * The result room is not yet complete, because its doors are not yet calculated.
      */
+    @Override
     public Collection<IncompleteFreeSpaceExpansionRoom> complete_shape(IncompleteFreeSpaceExpansionRoom p_room,
             int p_net_no, SearchTreeObject p_ignore_object, TileShape p_ignore_shape)
     {
         if (!(p_room.get_contained_shape() instanceof IntBox))
         {
             System.out.println("BoxShapeSearchTree.complete_shape: unexpected p_shape_to_be_contained");
-            return new LinkedList<IncompleteFreeSpaceExpansionRoom>();
+            return new LinkedList<>();
         }
         IntBox shape_to_be_contained = (IntBox) p_room.get_contained_shape();
         if (this.root == null)
         {
-            return new LinkedList<IncompleteFreeSpaceExpansionRoom>();
+            return new LinkedList<>();
         }
         IntBox start_shape = board.get_bounding_box();
         if (p_room.get_shape() != null)
@@ -75,13 +76,13 @@ public class ShapeSearchTree90Degree extends ShapeSearchTree
             if (!(p_room.get_shape() instanceof IntBox))
             {
                 System.out.println("BoxShapeSearchTree.complete_shape: p_start_shape of type IntBox expected");
-                return new LinkedList<IncompleteFreeSpaceExpansionRoom>();
+                return new LinkedList<>();
             }
             start_shape = ((IntBox)p_room.get_shape()).intersection(start_shape);
         }
         IntBox bounding_shape = start_shape;
         int room_layer = p_room.get_layer();
-        Collection<IncompleteFreeSpaceExpansionRoom> result = new LinkedList<IncompleteFreeSpaceExpansionRoom>();
+        Collection<IncompleteFreeSpaceExpansionRoom> result = new LinkedList<>();
         result.add(new IncompleteFreeSpaceExpansionRoom(start_shape, room_layer, shape_to_be_contained));
         this.node_stack.reset();
         this.node_stack.push(this.root);
@@ -106,7 +107,7 @@ public class ShapeSearchTree90Degree extends ShapeSearchTree
                     {
                         
                         IntBox curr_object_shape = curr_object.get_tree_shape(this, shape_index).bounding_box();
-                        Collection<IncompleteFreeSpaceExpansionRoom> new_result = new LinkedList<IncompleteFreeSpaceExpansionRoom>();
+                        Collection<IncompleteFreeSpaceExpansionRoom> new_result = new LinkedList<>();
                         IntBox new_bounding_shape = IntBox.EMPTY;
                         for (IncompleteFreeSpaceExpansionRoom curr_room : result)
                         {
@@ -169,7 +170,7 @@ public class ShapeSearchTree90Degree extends ShapeSearchTree
         // Then insersect p_shape with the halfplane defined by the
         // opposite of this line.
         
-        Collection<IncompleteFreeSpaceExpansionRoom> result = new LinkedList<IncompleteFreeSpaceExpansionRoom>();
+        Collection<IncompleteFreeSpaceExpansionRoom> result = new LinkedList<>();
         if (p_incomplete_room.get_contained_shape().is_empty())
         {
             if (this.board.get_test_level().ordinal() >=  TestLevel.ALL_DEBUGGING_OUTPUT.ordinal())
@@ -223,7 +224,7 @@ public class ShapeSearchTree90Degree extends ShapeSearchTree
             int curr_distance = shape_to_be_contained.ll.y - p_obstacle_shape.ur.y;
             if (curr_distance > cut_line_distance)
             {
-                cut_line_distance = curr_distance;
+//                cut_line_distance = curr_distance;
                 restrained_shape = new IntBox(room_shape.ll.x, p_obstacle_shape.ur.y, room_shape.ur.x, room_shape.ur.y);
             }
         }
@@ -280,6 +281,7 @@ public class ShapeSearchTree90Degree extends ShapeSearchTree
         return result;
     }
     
+    @Override
     TileShape[] calculate_tree_shapes(DrillItem p_drill_item)
     {
         if (this.board == null)
@@ -312,6 +314,7 @@ public class ShapeSearchTree90Degree extends ShapeSearchTree
         return  result;
     }
     
+    @Override
     TileShape[] calculate_tree_shapes(ObstacleArea p_obstacle_area)
     {
         TileShape[] result = super.calculate_tree_shapes(p_obstacle_area);
@@ -322,6 +325,7 @@ public class ShapeSearchTree90Degree extends ShapeSearchTree
         return result;
     }
     
+    @Override
     TileShape[] calculate_tree_shapes(BoardOutline p_outline)
     {
         TileShape[] result = super.calculate_tree_shapes(p_outline);
@@ -335,6 +339,7 @@ public class ShapeSearchTree90Degree extends ShapeSearchTree
     /**
      * Used for creating the shapes of a polyline_trace for this tree.
      */
+    @Override
     TileShape offset_shape(Polyline p_polyline, int p_half_width, int p_no)
     {
         return p_polyline.offset_box(p_half_width, p_no);
@@ -343,6 +348,7 @@ public class ShapeSearchTree90Degree extends ShapeSearchTree
     /**
      * Used for creating the shapes of a polyline_trace for this tree.
      */
+    @Override
     public TileShape[] offset_shapes(Polyline p_polyline, int p_half_width,
             int p_from_no, int p_to_no)
     {

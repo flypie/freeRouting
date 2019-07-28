@@ -53,7 +53,7 @@ public class ShapeTraceEntries
         list_anchor = null;
         trace_piece_count = 0;
         max_stack_level = 0;
-        shove_via_list = new java.util.LinkedList<Via>();
+        shove_via_list = new java.util.LinkedList<>();
     }
     
     /**
@@ -125,11 +125,7 @@ public class ShapeTraceEntries
         }
         search_from_side();
         resort();
-        if (!calculate_stack_levels())
-        {
-            return false;
-        }
-        return true;
+        return calculate_stack_levels();
     }
     
     
@@ -713,7 +709,7 @@ public class ShapeTraceEntries
                 }
                 check_entry = check_entry.next;
             }
-            EntryPoint next_entry = null;
+            EntryPoint next_entry;
             
             if (next_index != 0)
             {

@@ -29,6 +29,7 @@ public enum Unit implements java.io.Serializable
 {
     MIL
     {
+        @Override
         public String toString()
         {
             return "mil";
@@ -36,6 +37,7 @@ public enum Unit implements java.io.Serializable
     },
     INCH
     {
+        @Override
         public String toString()
         {
             return "inch";
@@ -44,6 +46,7 @@ public enum Unit implements java.io.Serializable
     
     MM
     {
+        @Override
         public String toString()
         {
             return "mm";
@@ -52,6 +55,7 @@ public enum Unit implements java.io.Serializable
     
     UM
     {
+        @Override
         public String toString()
         {
             return "um";
@@ -68,62 +72,82 @@ public enum Unit implements java.io.Serializable
         }
         else if (p_from_unit == INCH)
         {
-            if(p_to_unit == MIL)
-            {
-                result =  p_value * 1000.0;
-            }
-            else if (p_to_unit == MM)
-            {
-                result = p_value * INCH_TO_MM;
-            }
-            else // um
+            if(null == p_to_unit)
+                // um
             {
                 result = p_value * INCH_TO_MM * 1000.0;
+            }
+            else switch (p_to_unit)
+            {
+                case MIL:
+                    result =  p_value * 1000.0;
+                    break;
+                case MM:
+                    result = p_value * INCH_TO_MM;
+                    break;
+                default:
+                    result = p_value * INCH_TO_MM * 1000.0;
+                    break;
             }
         }
         else if (p_from_unit == MIL)
         {
-            if(p_to_unit == INCH)
-            {
-                result =  p_value / 1000.0;
-            }
-            else if(p_to_unit == MM)
-            {
-                result =  p_value * INCH_TO_MM;
-            }
-            else // um
+            if(null == p_to_unit)
+                // um
             {
                 result = (p_value * INCH_TO_MM) * 1000.0;
+            }
+            else switch (p_to_unit)
+            {
+                case INCH:
+                    result =  p_value / 1000.0;
+                    break;
+                case MM:
+                    result =  p_value * INCH_TO_MM;
+                    break;
+                default:
+                    result = (p_value * INCH_TO_MM) * 1000.0;
+                    break;
             }
         }
         else if (p_from_unit == MM)
         {
-            if(p_to_unit == INCH)
-            {
-                result =  p_value / INCH_TO_MM;
-            }
-            else if(p_to_unit == UM)
-            {
-                result =  p_value * 1000;
-            }
-            else // mil
+            if(null == p_to_unit)
+                // mil
             {
                 result = (p_value * 1000.0) / INCH_TO_MM;
+            }
+            else switch (p_to_unit)
+            {
+                case INCH:
+                    result =  p_value / INCH_TO_MM;
+                    break;
+                case UM:
+                    result =  p_value * 1000;
+                    break;
+                default:
+                    result = (p_value * 1000.0) / INCH_TO_MM;
+                    break;
             }
         }
         else //UM
         {
-            if(p_to_unit == INCH)
-            {
-                result =  p_value / (INCH_TO_MM * 1000.0);
-            }
-            else if(p_to_unit == MM)
-            {
-                result =  p_value / 1000.0;
-            }
-            else // mil
+            if(null == p_to_unit)
+                // mil
             {
                 result = p_value / INCH_TO_MM;
+            }
+            else switch (p_to_unit)
+            {
+                case INCH:
+                    result =  p_value / (INCH_TO_MM * 1000.0);
+                    break;
+                case MM:
+                    result =  p_value / 1000.0;
+                    break;
+                default:
+                    result = p_value / INCH_TO_MM;
+                    break;
             }
         }
         return result;

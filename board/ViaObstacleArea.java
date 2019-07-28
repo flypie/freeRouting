@@ -59,6 +59,7 @@ public class ViaObstacleArea extends ObstacleArea
                 this.name, get_fixed_state(), board);
     }
     
+    @Override
     public boolean is_obstacle(Item p_other)
     {
         if (p_other.shares_net(this))
@@ -68,11 +69,13 @@ public class ViaObstacleArea extends ObstacleArea
         return p_other instanceof Via;
     }
     
+    @Override
     public boolean is_trace_obstacle(int p_net_no)
     {
         return false;
     }
     
+    @Override
     public boolean is_selected_by_filter(ItemSelectionFilter p_filter)
     {
         if (!this.is_selected_by_fixed_filter(p_filter))
@@ -82,6 +85,7 @@ public class ViaObstacleArea extends ObstacleArea
         return p_filter.is_selected(ItemSelectionFilter.SelectableChoices.VIA_KEEPOUT);
     }
     
+    @Override
     public void print_info(ObjectInfoPanel p_window, java.util.Locale p_locale)
     {
         java.util.ResourceBundle resources = 
@@ -93,11 +97,13 @@ public class ViaObstacleArea extends ObstacleArea
         p_window.newline();
     }
     
+    @Override
     public java.awt.Color[] get_draw_colors(boardgraphics.GraphicsContext p_graphics_context)
     {
         return p_graphics_context.get_via_obstacle_colors();
     }
     
+    @Override
     public double get_draw_intensity(boardgraphics.GraphicsContext p_graphics_context)
     {
         return p_graphics_context.get_via_obstacle_color_intensity();

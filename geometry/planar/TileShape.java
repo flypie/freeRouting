@@ -136,6 +136,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, ja
      * The edge lines are sorted in counterclock sense around
      * the shape starting with the edge with the smallest direction.
      */
+    @Override
     public abstract Line border_line(int p_no);
 
     /**
@@ -153,6 +154,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, ja
      * Returns the content of the area of the shape.
      * If the shape is unbounded, Double.MAX_VALUE is returned.
      */
+    @Override
     public double area()
     {
         if (!is_bounded())
@@ -187,6 +189,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, ja
      * Returns true, if p_point is not contained in the inside or the
      * edge of the shape
      */
+    @Override
     public boolean is_outside(Point p_point)
     {
         int line_count = border_line_count();
@@ -204,6 +207,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, ja
         return false;
     }
 
+    @Override
     public boolean contains(Point p_point)
     {
         return !is_outside(p_point);
@@ -213,6 +217,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, ja
      * Returns true, if p_point is contained in this shape,
      * but not on an edge line
      */
+    @Override
     public boolean contains_inside(Point p_point)
     {
         int line_count = border_line_count();
@@ -233,6 +238,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, ja
     /**
      * Returns true, if p_point is contained in this shape.
      */
+    @Override
     public boolean contains(FloatPoint p_point)
     {
         return contains(p_point, 0);
@@ -323,6 +329,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, ja
     /**
      * Returns true, if p_point lies exact on the boundary of the shape
      */
+    @Override
     public boolean contains_on_border(Point p_point)
     {
         return (contains_on_border_line_no(p_point) >= 0);
@@ -364,6 +371,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, ja
      * Returns the distance between p_point and its nearest point
      * on the shape. 0, if p_point is contained in this shape
      */
+    @Override
     public double distance(FloatPoint p_point)
     {
         FloatPoint nearest_point = nearest_point_approx(p_point);
@@ -374,12 +382,14 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, ja
      * Returns the distance between p_point and its nearest point
      * on the edge of the shape.
      */
+    @Override
     public double border_distance(FloatPoint p_point)
     {
         FloatPoint nearest_point = nearest_border_point_approx(p_point);
         return nearest_point.distance(p_point);
     }
 
+    @Override
     public double smallest_radius()
     {
         return border_distance(centre_of_gravity());
@@ -399,6 +409,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, ja
         return nearest_border_point(p_from_point);
     }
 
+    @Override
     public FloatPoint nearest_point_approx(FloatPoint p_from_point)
     {
         if (this.contains(p_from_point))
@@ -423,7 +434,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, ja
         {
             return border_line(0).perpendicular_projection(p_from_point);
         }
-        Point nearest_point = null;
+        Point nearest_point;
         double min_dist = Double.MAX_VALUE;
         int min_dist_ind = 0;
 
@@ -670,6 +681,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, ja
         return translate_coors;
     }
 
+    @Override
     public ConvexShape shrink(double p_offset)
     {
         ConvexShape result = this.offset(-p_offset);
@@ -844,6 +856,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, ja
         return result;
     }
 
+    @Override
     public TileShape turn_90_degree(int p_factor, IntPoint p_pole)
     {
         Line[] new_lines = new Line[border_line_count()];
@@ -854,6 +867,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, ja
         return get_instance(new_lines);
     }
 
+    @Override
     public TileShape rotate_approx(double p_angle, FloatPoint p_pole)
     {
         if (p_angle == 0)
@@ -890,6 +904,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, ja
         return result;
     }
 
+    @Override
     public TileShape mirror_vertical(IntPoint p_pole)
     {
         Line[] new_lines = new Line[border_line_count()];
@@ -900,6 +915,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, ja
         return get_instance(new_lines);
     }
 
+    @Override
     public TileShape mirror_horizontal(IntPoint p_pole)
     {
         Line[] new_lines = new Line[border_line_count()];
@@ -1002,6 +1018,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, ja
      * Pieces completely contained in the border of this shape
      * are not returned.
      */
+    @Override
     public Polyline[] cutout(Polyline p_polyline)
     {
         int[][] intersection_no = this.entrance_points(p_polyline);
@@ -1020,7 +1037,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, ja
             result[0] = p_polyline;
             return result;
         }
-        Collection<Polyline> pieces = new LinkedList<Polyline>();
+        Collection<Polyline> pieces = new LinkedList<>();
         int curr_intersection_no = 0;
         int[] curr_intersection_tuple = intersection_no[curr_intersection_no];
         Point first_intersection =
@@ -1107,6 +1124,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, ja
         return result;
     }
 
+    @Override
     public TileShape[] split_to_convex()
     {
         TileShape[] result = new TileShape[1];
@@ -1127,7 +1145,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, ja
             return result;
         }
         TileShape[] section_boxes = this.bounding_box().divide_into_sections(p_max_section_width);
-        Collection<TileShape> section_list = new LinkedList<TileShape>();
+        Collection<TileShape> section_list = new LinkedList<>();
         for (int i = 0; i < section_boxes.length; ++i)
         {
             TileShape curr_section = this.intersection_with_simplify(section_boxes[i]);

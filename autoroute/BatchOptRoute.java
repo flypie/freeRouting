@@ -120,7 +120,7 @@ public class BatchOptRoute
         this.thread.hdlg.remove_ratsnest();
         int incomplete_count_before = this.thread.hdlg.get_ratsnest().incomplete_count();
         int via_count_before = this.routing_board.get_vias().size();
-        Set<Item> ripped_items = new java.util.TreeSet<Item>();
+        Set<Item> ripped_items = new java.util.TreeSet<>();
         ripped_items.add(p_item);
         if (p_item instanceof Trace)
         {
@@ -137,7 +137,7 @@ public class BatchOptRoute
                 curr_contact_list = curr_trace.get_end_contacts();
             }
         }
-        Set<Item> ripped_connections = new java.util.TreeSet<Item>();
+        Set<Item> ripped_connections = new java.util.TreeSet<>();
         for (Item curr_item : ripped_items)
         {
             ripped_connections.addAll(curr_item.get_connection_items(Item.StopConnectionOption.NONE));
@@ -263,8 +263,8 @@ public class BatchOptRoute
     private ReadSortedRouteItems sorted_route_items;
     private boolean use_increased_ripup_costs; // in the first passes the ripup costs are icreased for better performance.
     private double min_cumulative_trace_length_before = 0;
-    private static int MAX_AUTOROUTE_PASSES = 6;
-    private static int ADDITIONAL_RIPUP_COST_FACTOR_AT_START = 10;
+    private static final int MAX_AUTOROUTE_PASSES = 6;
+    private static final int ADDITIONAL_RIPUP_COST_FACTOR_AT_START = 10;
 
     /**
      *  Reads the vias and traces on the board in ascending x order.

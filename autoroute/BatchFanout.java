@@ -28,8 +28,8 @@ import interactive.InteractiveActionThread;
 
 /**
  * Handles the sequencing of the fanout inside the batch autorouter.
- * 
- * @author  Alfons Wirtz
+ *
+ * @author Alfons Wirtz
  */
 public class BatchFanout
 {
@@ -53,7 +53,7 @@ public class BatchFanout
         this.thread = p_thread;
         this.routing_board = p_thread.hdlg.get_routing_board();
         Collection<board.Pin> board_smd_pin_list = routing_board.get_smd_pins();
-        this.sorted_components = new java.util.TreeSet<Component>();
+        this.sorted_components = new java.util.TreeSet<>();
         for (int i = 1; i <= routing_board.components.count(); ++i)
         {
             board.Component curr_board_component = routing_board.components.get(i);
@@ -66,8 +66,8 @@ public class BatchFanout
     }
 
     /**
-     *  Routes a fanout pass and returns the number of new fanouted SMD-pins
-     *  in this pass.
+     * Routes a fanout pass and returns the number of new fanouted SMD-pins in
+     * this pass.
      */
     private int fanout_pass(int p_pass_no)
     {
@@ -84,19 +84,24 @@ public class BatchFanout
                 double max_milliseconds = 10000 * (p_pass_no + 1);
                 TimeLimit time_limit = new TimeLimit((int) max_milliseconds);
                 this.routing_board.start_marking_changed_area();
-                AutorouteEngine.AutorouteResult curr_result =
-                        this.routing_board.fanout(curr_pin.board_pin, this.thread.hdlg.settings, ripup_costs, this.thread, time_limit);
-                if (curr_result == AutorouteEngine.AutorouteResult.ROUTED)
+                AutorouteEngine.AutorouteResult curr_result
+                        = this.routing_board.fanout(curr_pin.board_pin, this.thread.hdlg.settings, ripup_costs, this.thread, time_limit);
+                if (null != curr_result)
                 {
-                    ++routed_count;
-                }
-                else if (curr_result == AutorouteEngine.AutorouteResult.NOT_ROUTED)
-                {
-                    ++not_routed_count;
-                }
-                else if (curr_result == AutorouteEngine.AutorouteResult.INSERT_ERROR)
-                {
-                    ++insert_error_count;
+                    switch (curr_result)
+                    {
+                        case ROUTED:
+                            ++routed_count;
+                            break;
+                        case NOT_ROUTED:
+                            ++not_routed_count;
+                            break;
+                        case INSERT_ERROR:
+                            ++insert_error_count;
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 if (curr_result != AutorouteEngine.AutorouteResult.NOT_ROUTED)
                 {
@@ -111,12 +116,12 @@ public class BatchFanout
         }
         if (this.routing_board.get_test_level() != board.TestLevel.RELEASE_VERSION)
         {
-            System.out.println("fanout pass: " + (p_pass_no + 1) + ", routed: " + routed_count 
+            System.out.println("fanout pass: " + (p_pass_no + 1) + ", routed: " + routed_count
                     + ", not routed: " + not_routed_count + ", errors: " + insert_error_count);
         }
         return routed_count;
     }
-    
+
     private final InteractiveActionThread thread;
     private final RoutingBoard routing_board;
 
@@ -128,7 +133,7 @@ public class BatchFanout
             this.board_component = p_board_component;
 
             // calcoulate the center of gravity of all SMD pins of this component.
-            Collection<board.Pin> curr_pin_list = new java.util.LinkedList<board.Pin>();
+            Collection<board.Pin> curr_pin_list = new java.util.LinkedList<>();
             int cmp_no = p_board_component.no;
             for (board.Pin curr_board_pin : p_board_smd_pin_list)
             {
@@ -151,7 +156,7 @@ public class BatchFanout
             this.gravity_center_of_smd_pins = new FloatPoint(x, y);
 
             // calculate the sorted SMD pins of this component
-            this.smd_pins = new java.util.TreeSet<Pin>();
+            this.smd_pins = new java.util.TreeSet<>();
 
             for (board.Pin curr_board_pin : curr_pin_list)
             {
@@ -161,8 +166,9 @@ public class BatchFanout
         }
 
         /**
-         *  Sort the components, so that components with maor pins come first
+         * Sort the components, so that components with maor pins come first
          */
+        @Override
         public int compareTo(Component p_other)
         {
             int compare_value = this.smd_pin_count - p_other.smd_pin_count;
@@ -170,12 +176,10 @@ public class BatchFanout
             if (compare_value > 0)
             {
                 result = -1;
-            }
-            else if (compare_value < 0)
+            } else if (compare_value < 0)
             {
                 result = 1;
-            }
-            else
+            } else
             {
                 result = this.board_component.no - p_other.board_component.no;
             }
@@ -184,7 +188,9 @@ public class BatchFanout
         final board.Component board_component;
         final int smd_pin_count;
         final SortedSet<Pin> smd_pins;
-        /** The center of gravity of all SMD pins of this component. */
+        /**
+         * The center of gravity of all SMD pins of this component.
+         */
         final FloatPoint gravity_center_of_smd_pins;
 
         class Pin implements Comparable<Pin>
@@ -197,6 +203,7 @@ public class BatchFanout
                 this.distance_to_component_center = pin_location.distance(gravity_center_of_smd_pins);
             }
 
+            @Override
             public int compareTo(Pin p_other)
             {
                 int result;
@@ -204,12 +211,10 @@ public class BatchFanout
                 if (delta_dist > 0)
                 {
                     result = 1;
-                }
-                else if (delta_dist < 0)
+                } else if (delta_dist < 0)
                 {
                     result = -1;
-                }
-                else
+                } else
                 {
                     result = this.board_pin.pin_no - p_other.board_pin.pin_no;
                 }

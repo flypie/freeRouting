@@ -33,16 +33,19 @@ public class IntDirection extends Direction implements java.io.Serializable
 {
     
     private static final long serialVersionUID = 7524472765628777226L;
+    @Override
     public boolean is_orthogonal()
     {
         return ( x == 0 || y == 0 ) ;
     }
     
+    @Override
     public boolean is_diagonal()
     {
         return ( Math.abs(x) == Math.abs(y) ) ;
     }
     
+    @Override
     public Vector get_vector()
     {
         return new IntVector(x,y);

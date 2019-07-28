@@ -42,6 +42,7 @@ class PullTightAlgo90 extends PullTightAlgo
         super(p_board, p_only_net_no_arr, p_stoppable_thread, p_time_limit, p_keep_point, p_keep_point_layer);
     }
     
+    @Override
     Polyline pull_tight(Polyline p_polyline)
     {
         Polyline new_result = avoid_acid_traps(p_polyline);

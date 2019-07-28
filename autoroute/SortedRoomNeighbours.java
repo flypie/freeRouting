@@ -174,7 +174,7 @@ public class SortedRoomNeighbours
             return null;
         }
         SortedRoomNeighbours result = new SortedRoomNeighbours(p_room, completed_room);
-        Collection<ShapeTree.TreeEntry> overlapping_objects = new LinkedList<ShapeTree.TreeEntry>();
+        Collection<ShapeTree.TreeEntry> overlapping_objects = new LinkedList<>();
         p_autoroute_search_tree.overlapping_tree_entries(room_shape, p_room.get_layer(), overlapping_objects);
         // Calculate the touching neigbour objects and sort them in counterclock sence
         // around the border of the room shape.
@@ -317,8 +317,8 @@ public class SortedRoomNeighbours
         from_room = p_from_room;
         completed_room = p_completed_room;
         room_shape = p_completed_room.get_shape();
-        sorted_neighbours = new TreeSet<SortedRoomNeighbour>();
-        own_net_objects = new LinkedList<ShapeTree.TreeEntry>();
+        sorted_neighbours = new TreeSet<>();
+        own_net_objects = new LinkedList<>();
     }
     
     private void add_sorted_neighbour(TileShape p_neighbour_shape, TileShape p_intersection,
@@ -712,6 +712,7 @@ public class SortedRoomNeighbours
          * Compare function for or sorting the neighbours in counterclock sense
          * around the border of the room shape in ascending order.
          */
+        @Override
         public int compareTo(SortedRoomNeighbour p_other)
         {
             int compare_value = this.touching_side_no_of_room - p_other.touching_side_no_of_room;

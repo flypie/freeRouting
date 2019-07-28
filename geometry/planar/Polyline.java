@@ -449,7 +449,7 @@ public class Polyline implements java.io.Serializable
             // cut off outstanding corners with following shapes
             FloatPoint corner_to_check = null;
             Line curr_line = lines[1];
-            Line check_line = null;
+            Line check_line; //Ontobus
             if (next_dir_from_curr_dir == Side.ON_THE_LEFT)
             {
                 check_line = lines[2];
@@ -460,7 +460,8 @@ public class Polyline implements java.io.Serializable
             }
             FloatPoint check_distance_corner = corner_approx(i);
             final double check_dist_square = 2.0 * p_half_width * p_half_width;
-            Collection<Line> cut_dog_ear_lines = new LinkedList<Line>();
+            Collection<Line> cut_dog_ear_lines;
+            cut_dog_ear_lines = new LinkedList<>();
             Vector tmp_curr_dir = next_dir;
             boolean direction_changed = false;
             for (int j = i + 2; j < arr.length - 1; ++j)
@@ -475,12 +476,13 @@ public class Polyline implements java.io.Serializable
                     corner_to_check = curr_line.intersection_approx(check_line);
                 }
                 Vector tmp_next_dir = arr[j].direction().get_vector();
-                Line next_border_line = null;
                 Side tmp_next_dir_from_tmp_curr_dir = tmp_next_dir.side_of(tmp_curr_dir);
                 direction_changed =
                         tmp_next_dir_from_tmp_curr_dir != next_dir_from_curr_dir;
                 if (!direction_changed)
                 {
+                    Line next_border_line; //Ontobus
+
                     if (tmp_next_dir_from_tmp_curr_dir == Side.ON_THE_LEFT)
                     {
                         next_border_line = arr[j].translate(-p_half_width);
@@ -526,12 +528,14 @@ public class Polyline implements java.io.Serializable
                     corner_to_check = curr_line.intersection_approx(check_line);
                 }
                 Vector tmp_prev_dir = arr[j].direction().get_vector();
-                Line prev_border_line = null;
+
                 Side tmp_curr_dir_from_tmp_prev_dir = tmp_curr_dir.side_of(tmp_prev_dir);
                 direction_changed =
                         tmp_curr_dir_from_tmp_prev_dir != curr_dir_from_prev_dir;
                 if (!direction_changed)
                 {
+                    Line prev_border_line; //Ontobus
+
                     if (tmp_curr_dir.side_of(tmp_prev_dir) == Side.ON_THE_LEFT)
                     {
                         prev_border_line = arr[j].translate(-p_half_width);

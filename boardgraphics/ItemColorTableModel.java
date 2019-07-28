@@ -66,29 +66,26 @@ public class ItemColorTableModel extends ColorTableModel implements java.io.Seri
                     // currenntly 6 different default colors for traces on the inner layers
                     final int different_inner_colors = 6;
                     int remainder = signal_layer_no % different_inner_colors;
-                    if (remainder % different_inner_colors == 1)
+                    switch (remainder % different_inner_colors)
                     {
-                        curr_row[ColumnNames.TRACES.ordinal()] = Color.GREEN;
-                    }
-                    else if (remainder % different_inner_colors == 2)
-                    {
-                        curr_row[ColumnNames.TRACES.ordinal()] = Color.YELLOW;
-                    }
-                    else if (remainder % different_inner_colors == 3)
-                    {
-                        curr_row[ColumnNames.TRACES.ordinal()] = new Color(200, 100, 255);
-                    }
-                    else if (remainder % different_inner_colors == 4)
-                    {
-                        curr_row[ColumnNames.TRACES.ordinal()] = new Color(255, 150, 150);
-                    }
-                    else if (remainder % different_inner_colors == 5)
-                    {
-                        curr_row[ColumnNames.TRACES.ordinal()] = new Color(100, 150, 0);
-                    }
-                    else
-                    {
-                        curr_row[ColumnNames.TRACES.ordinal()] = new Color(0, 200, 255);
+                        case 1:
+                            curr_row[ColumnNames.TRACES.ordinal()] = Color.GREEN;
+                            break;
+                        case 2:
+                            curr_row[ColumnNames.TRACES.ordinal()] = Color.YELLOW;
+                            break;
+                        case 3:
+                            curr_row[ColumnNames.TRACES.ordinal()] = new Color(200, 100, 255);
+                            break;
+                        case 4:
+                            curr_row[ColumnNames.TRACES.ordinal()] = new Color(255, 150, 150);
+                            break;
+                        case 5:
+                            curr_row[ColumnNames.TRACES.ordinal()] = new Color(100, 150, 0);
+                            break;
+                        default:
+                            curr_row[ColumnNames.TRACES.ordinal()] = new Color(0, 200, 255);
+                            break;
                     }
                 }
                 else // power layer
@@ -130,16 +127,19 @@ public class ItemColorTableModel extends ColorTableModel implements java.io.Seri
         }
     }
     
+    @Override
     public int getColumnCount()
     {
         return ColumnNames.values().length;
     }
     
+    @Override
     public int getRowCount()
     {
         return data.length;
     }
     
+    @Override
     public String getColumnName(int p_col)
     {
         java.util.ResourceBundle resources = 
@@ -147,6 +147,7 @@ public class ItemColorTableModel extends ColorTableModel implements java.io.Seri
         return resources.getString(ColumnNames.values()[p_col].toString());
     }
     
+    @Override
     public void setValueAt(Object p_value, int p_row, int p_col)
     {
         super.setValueAt(p_value, p_row, p_col);
@@ -157,6 +158,7 @@ public class ItemColorTableModel extends ColorTableModel implements java.io.Seri
      * Don't need to implement this method unless your table's
      * editable.
      */
+    @Override
     public boolean isCellEditable(int p_row, int p_col)
     {
         //Note that the data/cell address is constant,

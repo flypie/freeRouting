@@ -75,7 +75,7 @@ public class MoveDrillItemAlgo
         Collection<Item> ignore_items;
         if (p_ignore_items == null)
         {
-            ignore_items = new java.util.LinkedList<Item>();
+            ignore_items = new java.util.LinkedList<>();
         }
         else
         {

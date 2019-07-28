@@ -19,6 +19,7 @@ package geometry.planar;
 import java.math.BigInteger;
 
 import datastructures.Signum;
+import java.util.Objects;
 
 /**
  *
@@ -80,6 +81,7 @@ public class Line implements Comparable<Line>, java.io.Serializable
     /**
      * returns true, if this and p_ob define the same line
      */
+    @Override
     public final boolean equals( Object p_ob )
     {
         if ( this == p_ob )
@@ -100,6 +102,15 @@ public class Line implements Comparable<Line>, java.io.Serializable
             return false;
         }
         return direction().equals(other.direction());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 5;
+        hash = 53 * hash + Objects.hashCode(this.a);
+        hash = 53 * hash + Objects.hashCode(this.b);
+        return hash;
     }
     
     /**
@@ -558,6 +569,7 @@ public class Line implements Comparable<Line>, java.io.Serializable
      * Fast implementation only for lines consisting of IntPoints
      * because of critical performance
      */
+    @Override
     public int compareTo(Line p_other)
     {
         IntPoint this_a = (IntPoint) a;

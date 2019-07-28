@@ -70,6 +70,7 @@ public class RoutingBoard extends BasicBoard implements java.io.Serializable
     /**
      * Maintains the autorouter database after p_item is inserted, changed, or deleted.
      */
+    @Override
     public void additional_update_after_change(Item p_item)
     {
         if (p_item == null)
@@ -121,7 +122,7 @@ public class RoutingBoard extends BasicBoard implements java.io.Serializable
             calculate_tidy_region = false;
         }
         start_marking_changed_area();
-        Set<Integer> changed_nets = new TreeSet<Integer>();
+        Set<Integer> changed_nets = new TreeSet<>();
         Iterator<Item> it = p_item_list.iterator();
         while (it.hasNext())
         {
@@ -964,7 +965,7 @@ public class RoutingBoard extends BasicBoard implements java.io.Serializable
         {
             return AutorouteEngine.AutorouteResult.ALREADY_CONNECTED; // p_item is already routed.
         }
-        SortedSet<Item> ripped_item_list = new TreeSet<Item>();
+        SortedSet<Item> ripped_item_list = new TreeSet<>();
         AutorouteEngine curr_autoroute_engine = init_autoroute(p_item.get_net_no(0),
                 ctrl_settings.trace_clearance_class_no, p_stoppable_thread, p_time_limit, false);
         AutorouteEngine.AutorouteResult result =
@@ -1012,7 +1013,7 @@ public class RoutingBoard extends BasicBoard implements java.io.Serializable
             ctrl_settings.ripup_allowed = true;
             ctrl_settings.ripup_costs = p_ripup_costs;
         }
-        SortedSet<Item> ripped_item_list = new TreeSet<Item>();
+        SortedSet<Item> ripped_item_list = new TreeSet<>();
         AutorouteEngine curr_autoroute_engine = init_autoroute(pin_net_no,
                 ctrl_settings.trace_clearance_class_no, p_stoppable_thread, p_time_limit, false);
         AutorouteEngine.AutorouteResult result =
@@ -1126,7 +1127,7 @@ public class RoutingBoard extends BasicBoard implements java.io.Serializable
      */
     public boolean remove_trace_tails(int p_net_no, Item.StopConnectionOption p_stop_connection_option)
     {
-        SortedSet<Item> stub_set = new TreeSet<Item>();
+        SortedSet<Item> stub_set = new TreeSet<>();
         Collection<Item> board_items = this.get_items();
         for (Item curr_item : board_items)
         {
@@ -1161,7 +1162,7 @@ public class RoutingBoard extends BasicBoard implements java.io.Serializable
                 stub_set.add(curr_item);
             }
         }
-        SortedSet<Item> stub_connections = new TreeSet<Item>();
+        SortedSet<Item> stub_connections = new TreeSet<>();
         for (Item curr_item : stub_set)
         {
             int item_contact_count = curr_item.get_normal_contacts().size();
@@ -1306,7 +1307,7 @@ public class RoutingBoard extends BasicBoard implements java.io.Serializable
                             }
                             if (!pin_found) // at tie pins traces may have different nets
                             {
-                                for (Item curr_contact : contacts)
+                                for (var curr_contact : contacts)
                                 {
                                     if (!(curr_contact instanceof Pin) && !curr_contact.contains_net(curr_net_no))
                                     {

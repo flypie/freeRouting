@@ -64,10 +64,10 @@ public class MoveComponent
         }
         else
         {
-            item_group_list = new LinkedList<Item>();
+            item_group_list = new LinkedList<>();
             item_group_list.add(p_item);
         }
-        Collection<FloatPoint> item_centers = new LinkedList<FloatPoint>();
+        Collection<FloatPoint> item_centers = new LinkedList<>();
         for (Item curr_item : item_group_list)
         {
             boolean curr_item_movable = !curr_item.is_user_fixed() && ((curr_item instanceof DrillItem) || (curr_item instanceof ObstacleArea) || (curr_item instanceof ComponentOutline));
@@ -103,6 +103,11 @@ public class MoveComponent
             {
                 item_center = ((DrillItem) curr_item).get_center();
             }
+            else if(curr_item == null)
+            {
+                System.out.println("MoveComponent: null item!");
+                throw null;
+            }
             else
             {
                 item_center = curr_item.bounding_box().centre_of_gravity().round();
@@ -127,7 +132,7 @@ public class MoveComponent
             return false;
         }
         TimeLimit time_limit = new TimeLimit(CHECK_TIME_LIMIT);
-        Collection<Item> ignore_items = new LinkedList<Item>();
+        Collection<Item> ignore_items = new LinkedList<>();
         for (int i = 0; i < item_group_arr.length; ++i)
         {
             boolean move_ok;
@@ -208,8 +213,8 @@ public class MoveComponent
     private boolean all_items_movable = true;
     private SortedItem[] item_group_arr;
     private Component component = null;
-    private static int PULL_TIGHT_TIME_LIMIT = 1000;
-    private static int CHECK_TIME_LIMIT = 3000;
+    private static final int PULL_TIGHT_TIME_LIMIT = 1000;
+    private static final int CHECK_TIME_LIMIT = 3000;
 
     /**
      * used to sort the group items in the direction of translate_vector,
@@ -224,6 +229,7 @@ public class MoveComponent
             projection = p_projection;
         }
 
+        @Override
         public int compareTo(SortedItem p_other)
         {
             return Signum.as_int(this.projection - p_other.projection);

@@ -91,8 +91,8 @@ class CalcShapeAndFromSide
             }
             if (from_side_no >= 0)
             {
-                FloatPoint border_intersection =
-                        curr_cut_line.intersection_approx(curr_shape.border_line(from_side_no));
+                FloatPoint border_intersection;
+                border_intersection = curr_cut_line.intersection_approx(curr_shape.border_line(from_side_no));
                 curr_from_side = new CalcFromSide(from_side_no,  border_intersection);
             }
         }

@@ -50,6 +50,7 @@ public class IntPoint extends Point implements java.io.Serializable
     /**
      * Returns true, if this IntPoint is equal to p_ob
      */
+    @Override
     public final boolean equals( Object p_ob )
     {
         if ( this == p_ob )
@@ -67,17 +68,29 @@ public class IntPoint extends Point implements java.io.Serializable
         IntPoint other = (IntPoint)p_ob ;
         return ( x == other.x && y == other.y ) ;
     }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 7;
+        hash = 29 * hash + this.x;
+        hash = 29 * hash + this.y;
+        return hash;
+    }
     
+    @Override
     public boolean is_infinite()
     {
         return false;
     }
     
+    @Override
     public IntBox surrounding_box()
     {
         return new IntBox(this, this);
     }
     
+    @Override
     public IntOctagon surrounding_octagon()
     {
         int tmp_1 = x - y;
@@ -86,6 +99,7 @@ public class IntPoint extends Point implements java.io.Serializable
         return new IntOctagon(x, y, x, y, tmp_1, tmp_1, tmp_2, tmp_2);
     }
     
+    @Override
     public boolean is_contained_in(IntBox p_box)
     {
         return x >= p_box.ll.x && y >= p_box.ll.y
@@ -95,6 +109,7 @@ public class IntPoint extends Point implements java.io.Serializable
     /**
      * returns the translation of this point by p_vector
      */
+    @Override
     public final Point translate_by( Vector p_vector )
     {
         if (p_vector.equals(Vector.ZERO))
@@ -104,11 +119,13 @@ public class IntPoint extends Point implements java.io.Serializable
         return p_vector.add_to(this) ;
     }
     
+    @Override
     Point translate_by( IntVector p_vector )
     {
         return ( new IntPoint( x + p_vector.x, y + p_vector.y ) ) ;
     }
     
+    @Override
     Point translate_by( RationalVector p_vector )
     {
         return p_vector.add_to(this);
@@ -118,23 +135,27 @@ public class IntPoint extends Point implements java.io.Serializable
     /**
      * returns the difference vector of this point and p_other
      */
+    @Override
     public Vector difference_by(Point p_other)
     {
         Vector tmp =  p_other.difference_by(this);
         return tmp.negate();
     }
     
+    @Override
     Vector difference_by(RationalPoint p_other)
     {
         Vector tmp = p_other.difference_by(this);
         return tmp.negate();
     }
     
+    @Override
     IntVector difference_by(IntPoint p_other)
     {
         return new IntVector(x - p_other.x, y - p_other.y);
     }
     
+    @Override
     public Side side_of(Line p_line)
     {
         Vector v1 = difference_by(p_line.a);
@@ -145,6 +166,7 @@ public class IntPoint extends Point implements java.io.Serializable
     /**
      * converts this point to a FloatPoint.
      */
+    @Override
     public FloatPoint to_float()
     {
         return new FloatPoint(x, y);
@@ -159,6 +181,7 @@ public class IntPoint extends Point implements java.io.Serializable
     }
     
     
+    @Override
     public Point perpendicular_projection(Line p_line)
     {
         // this function is at the moment only implemented for lines
@@ -465,17 +488,20 @@ public class IntPoint extends Point implements java.io.Serializable
         return result;
     }
     
+    @Override
     public int compare_x(Point p_other)
     {
         return -p_other.compare_x(this);
     }
     
+    @Override
     public int compare_y(Point p_other)
     {
         return -p_other.compare_y(this);
     }
     
     
+    @Override
     int compare_x(IntPoint p_other)
     {
         int result;
@@ -494,6 +520,7 @@ public class IntPoint extends Point implements java.io.Serializable
         return result;
     }
     
+    @Override
     int compare_y(IntPoint p_other)
     {
         int result;
@@ -512,11 +539,13 @@ public class IntPoint extends Point implements java.io.Serializable
         return result;
     }
     
+    @Override
     int compare_x(RationalPoint p_other)
     {
         return -p_other.compare_x(this);
     }
     
+    @Override
     int compare_y(RationalPoint p_other)
     {
         return -p_other.compare_y(this);

@@ -120,7 +120,7 @@ public class ShoveTraceAlgo
                 if (i == 0 || curr_shove_via_center.distance_square(try_via_centers[i].to_float()) <= max_dist_square)
                 {
                     Vector delta = try_via_centers[i].difference_by(curr_shove_via.get_center());
-                    Collection<Item> ignore_items = new java.util.LinkedList<Item>();
+                    Collection<Item> ignore_items = new java.util.LinkedList<>();
                     if (MoveDrillItemAlgo.check(curr_shove_via, delta, p_max_recursion_depth,
                             p_max_via_recursion_depth - 1, ignore_items, this.board, p_time_limit))
                     {
@@ -269,7 +269,7 @@ public class ShoveTraceAlgo
                     return 0;
                 }
                 Vector delta = new_via_center[0].difference_by(curr_shove_via.get_center());
-                Collection<Item> ignore_items = new java.util.LinkedList<Item>();
+                Collection<Item> ignore_items = new java.util.LinkedList<>();
                 shove_via_ok = MoveDrillItemAlgo.check(curr_shove_via, delta, p_max_recursion_depth,
                         p_max_via_recursion_depth - 1, ignore_items, p_board, null);
             }
@@ -388,13 +388,14 @@ public class ShoveTraceAlgo
         Collection<Item> obstacles =
                 search_tree.overlapping_items_with_clearance(p_trace_shape, p_layer, new int[0], p_cl_type);
         obstacles.removeAll(get_ignore_items_at_tie_pins(p_trace_shape, p_layer, p_net_no_arr));
-        boolean obstacles_shovable = shape_entries.store_items(obstacles, false, true);
         if (!shape_entries.shove_via_list.isEmpty())
         {
-            obstacles_shovable = false;
             this.board.set_shove_failing_obstacle(shape_entries.shove_via_list.iterator().next());
             return false;
-        }
+        } 
+        
+        boolean obstacles_shovable = shape_entries.store_items(obstacles, false, true);
+
         if (!obstacles_shovable)
         {
             this.board.set_shove_failing_obstacle(shape_entries.get_found_obstacle());
@@ -490,7 +491,7 @@ public class ShoveTraceAlgo
     Collection<Item> get_ignore_items_at_tie_pins(TileShape p_trace_shape, int p_layer, int[] p_net_no_arr)
     {
         Collection<SearchTreeObject> overlaps = this.board.overlapping_objects(p_trace_shape, p_layer);
-        Set<Item> result = new java.util.TreeSet<Item>();
+        Set<Item> result = new java.util.TreeSet<>();
         for (SearchTreeObject curr_object : overlaps)
         {
             if (curr_object instanceof Pin)
