@@ -661,19 +661,30 @@ public class IntOctagon extends RegularTileShape implements java.io.Serializable
             case 1:
                 tmp = p_x - p_y - this.lrx;
                 break;
+
             case 2:
                 tmp = p_x - this.rx;
                 break;
+
+            case 3:
+                tmp = p_x + p_y - this.urx;
+                break;
+
             case 4:
                 tmp = p_y - this.uy;
                 break;
+
+            case 5:
+                tmp = this.ulx + p_y - p_x;
+                break;
+                
             case 6:
                 tmp = this.lx - p_x;
                 break;
+
             case 7:
                 tmp = this.llx - p_x - p_y;
                 break;
-
             default:
                 System.out.println("IntOctagon.side_of_border_line: p_border_line_no out of range");
                 tmp = 0;
