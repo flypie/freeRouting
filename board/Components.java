@@ -23,7 +23,9 @@ package board;
 
 
 import java.util.Iterator;
-import java.util.Vector;
+//import java.util.Vector;
+import java.util.ArrayList;
+
 
 import datastructures.UndoableObjects;
 
@@ -40,6 +42,11 @@ import library.Package;
 public class Components implements java.io.Serializable
 {
     private static final long serialVersionUID = 7524472765628777246L;
+
+    public Components()
+    {
+        this.component_arr = new ArrayList<>();
+    }
     /**
      * Inserts a component into the list.
      * The items of the component have to be inserted seperately into the board.
@@ -95,7 +102,7 @@ public class Components implements java.io.Serializable
      */
     public Component get(int p_component_no)
     {
-        Component result =  component_arr.elementAt(p_component_no - 1);
+        Component result =  component_arr.get(p_component_no - 1);
         if (result != null && result.no != p_component_no)
         {
             System.out.println("Components.get: inconsistent component number");
@@ -160,7 +167,7 @@ public class Components implements java.io.Serializable
             {
                 break;
             }
-            this.component_arr.setElementAt(curr_component, curr_component.no - 1);
+            this.component_arr.set(curr_component.no - 1,curr_component);
             p_observers.notify_moved(curr_component);
         }
     }
@@ -230,7 +237,7 @@ public class Components implements java.io.Serializable
     
     private final UndoableObjects undo_list = new UndoableObjects();
     
-    private Vector<Component> component_arr = new Vector<Component>();
+    private final ArrayList<Component> component_arr;
     
     /**
      * If true, components on the back side are rotated before mirroring,

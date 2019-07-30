@@ -43,6 +43,7 @@ public class NetClass implements java.io.Serializable, board.ObjectInfoPanel.Pri
 
     }
 
+    @Override
     public String toString()
     {
         return this.name;
@@ -268,6 +269,7 @@ public class NetClass implements java.io.Serializable, board.ObjectInfoPanel.Pri
         }
     }
 
+    @Override
     public void print_info(board.ObjectInfoPanel p_window, java.util.Locale p_locale)
     {
         java.util.ResourceBundle resources =
@@ -357,8 +359,8 @@ public class NetClass implements java.io.Serializable, board.ObjectInfoPanel.Pri
     private String name;
     private ViaRule via_rule;
     private int trace_clearance_class;
-    private int[] trace_half_width_arr;
-    private boolean[] active_routing_layer_arr;
+    private final int[] trace_half_width_arr;
+    private final boolean[] active_routing_layer_arr;
     /** if null, all signal layers may be used for routing */
     private boolean shove_fixed = false;
     private boolean pull_tight = true;

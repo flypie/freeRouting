@@ -50,6 +50,7 @@ public class OtherColorTableModel extends ColorTableModel implements java.io.Ser
         curr_row[ColumnNames.COMPONENT_FRONT.ordinal()] = Color.blue;
         curr_row[ColumnNames.COMPONENT_BACK.ordinal()] = Color.red;
         curr_row[ColumnNames.LENGTH_MATCHING_AREA.ordinal()] = Color.green;
+ 
     }
     
     public OtherColorTableModel(java.io.ObjectInputStream p_stream)

@@ -48,7 +48,14 @@ public class IntOctagon extends RegularTileShape implements java.io.Serializable
                       int p_ulx, int p_lrx, int p_llx, int p_urx)
     {
         lx = p_lx;
+
+        if(Math.abs(p_ly) > Limits.CRIT_INT)
+        {
+            System.out.println("Warning in IntOctagon: p_y to big");
+        }
+         
         ly = p_ly;
+ 
         rx = p_rx;
         uy = p_uy;
         ulx = p_ulx;
@@ -488,7 +495,11 @@ public class IntOctagon extends RegularTileShape implements java.io.Serializable
         {
             new_ly = new_llx - new_rx;
         }
-
+        if(Math.abs(new_ly) > Limits.CRIT_INT)
+        {
+            System.out.println("Warning in normalize: p_y to big");
+        }
+        
         if (new_uy > new_urx - new_lx)
         // the point lx, uy is above the upper right border line of
         // this octagon.

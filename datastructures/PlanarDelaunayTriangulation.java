@@ -48,7 +48,7 @@ public class PlanarDelaunayTriangulation
     /** Creates a new instance of PlanarDelaunayTriangulation from p_object_list. */
     public PlanarDelaunayTriangulation(Collection<PlanarDelaunayTriangulation.Storable> p_object_list)
     {
-        List<Corner> corner_list = new LinkedList<Corner>();
+        List<Corner> corner_list = new LinkedList<>();
         for (PlanarDelaunayTriangulation.Storable curr_object : p_object_list)
         {
             Point[] curr_corners = curr_object.get_triangulation_corners();
@@ -90,7 +90,7 @@ public class PlanarDelaunayTriangulation
         // Initialize the search graph.
         
         this.search_graph = new TriangleGraph(start_triangle);
-        this.degenerate_edges = new LinkedList<Edge>();
+        this.degenerate_edges = new LinkedList<>();
         
         // Insert the corners in the corner list into the search graph.
         
@@ -106,7 +106,7 @@ public class PlanarDelaunayTriangulation
      */
     public Collection<ResultEdge> get_edge_lines()
     {
-        Collection<ResultEdge> result = new LinkedList<ResultEdge>();
+        Collection<ResultEdge> result = new LinkedList<>();
         for (Edge curr_edge : this.degenerate_edges)
         {
             result.add(new ResultEdge(curr_edge.start_corner.coor, curr_edge.start_corner.object,
@@ -114,7 +114,7 @@ public class PlanarDelaunayTriangulation
         }
         if (this.search_graph.anchor != null)
         {
-            Set<Edge> result_edges = new TreeSet<Edge>();
+            Set<Edge> result_edges = new TreeSet<>();
             this.search_graph.anchor.get_leaf_edges(result_edges);
             for (Edge curr_edge : result_edges)
             {
@@ -326,7 +326,7 @@ public class PlanarDelaunayTriangulation
     /**
      * This list contain the edges of the trinangulation, where the start corner and end corner are equal.
      */
-    private Collection<Edge> degenerate_edges;
+    private final Collection<Edge> degenerate_edges;
     
     /**
      * id numbers are for implementing an ordering on the Edges so that they can be used in a set for example
@@ -337,8 +337,8 @@ public class PlanarDelaunayTriangulation
      * Randum generatur to shuffle the input corners.
      * A fixed seed is used to make the results reproduceble.
      */
-    static private int seed = 99;
-    static private java.util.Random random_generator = new java.util.Random(seed);
+    private static final int seed = 99;
+    private static final java.util.Random random_generator = new java.util.Random(seed);
     
     /**
      * Interface with funktionality required for objects to be used
@@ -414,6 +414,7 @@ public class PlanarDelaunayTriangulation
             id_no = new_edge_id_no();
         }
         
+        @Override
         public int compareTo(Edge p_other)
         {
             return (this.id_no - p_other.id_no);
@@ -679,7 +680,7 @@ public class PlanarDelaunayTriangulation
         {
             this.edge_lines = p_edge_lines;
             // create an empty list for the children.
-            this.children = new LinkedList<Triangle>();
+            this.children = new LinkedList<>();
             this.first_parent = p_first_parent;
         }
         
@@ -830,7 +831,7 @@ public class PlanarDelaunayTriangulation
             {
                 new_edges[i] = new Edge(this.get_corner(i), p_corner);
             }
-            
+           
             // construct the 3 new triangles.
             Edge [] curr_edge_lines = new Edge[3];
             
@@ -1129,7 +1130,7 @@ public class PlanarDelaunayTriangulation
         private boolean[]  is_on_the_left_of_edge_line = null;
         
         /** The children of this triangle when used as a node in the triangle search graph. */
-        private Collection<Triangle>  children;
+        private final Collection<Triangle>  children;
         
         /**
          * Triangles resulting from an edge flip have 2 parents, all other triangles have 1 parent.

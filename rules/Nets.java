@@ -19,7 +19,8 @@
  */
 package rules;
 
-import java.util.Vector;
+//import java.util.Vector;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -33,7 +34,7 @@ public class Nets implements java.io.Serializable
     /** Creates a new empty net list */
     public Nets()
     {
-        net_arr = new Vector<Net>();
+        net_arr = new ArrayList<>();
     }
 
     /**
@@ -65,7 +66,7 @@ public class Nets implements java.io.Serializable
      */
     public Collection<Net> get(String p_name)
     {
-        Collection<Net> result = new java.util.LinkedList<Net>();
+        Collection<Net> result = new java.util.LinkedList<>();
         for (Net curr_net : net_arr)
         {
             if (curr_net != null && curr_net.name.compareToIgnoreCase(p_name) == 0)
@@ -85,7 +86,7 @@ public class Nets implements java.io.Serializable
         {
             return null;
         }
-        Net result = net_arr.elementAt(p_net_no - 1);
+        Net result = net_arr.get(p_net_no - 1);
         if (result != null && result.net_number != p_net_no)
         {
             System.out.println("Nets.get: inconsistent net_no");
@@ -154,6 +155,6 @@ public class Nets implements java.io.Serializable
     /** auxiliary net number for internal use */
     public static final int hidden_net_no = 10000001;
     /** The list of electrical nets on the board */
-    private Vector<Net> net_arr;
+    private ArrayList<Net> net_arr;
     private board.BasicBoard board;
 }

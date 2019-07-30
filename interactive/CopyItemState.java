@@ -54,7 +54,7 @@ public class CopyItemState extends InteractiveState
     public static CopyItemState get_instance(FloatPoint p_location, Collection<Item> p_item_list,
     InteractiveState p_parent_state, BoardHandling p_board_handling, Logfile p_logfile)
     {
-        if (p_item_list.size() == 0)
+        if (p_item_list.isEmpty())
         {
             return null;
         }
@@ -67,7 +67,7 @@ public class CopyItemState extends InteractiveState
     InteractiveState p_parent_state, BoardHandling p_board_handling, Logfile p_logfile)
     {
         super(p_parent_state, p_board_handling, p_logfile);
-        item_list = new LinkedList<Item>();
+        item_list = new LinkedList<>();
         
         start_position = p_location.round();
         current_layer =  p_board_handling.settings.layer;
@@ -90,6 +90,7 @@ public class CopyItemState extends InteractiveState
         }
     }
     
+    @Override
     public InteractiveState mouse_moved()
     {
         super.mouse_moved();
@@ -120,6 +121,7 @@ public class CopyItemState extends InteractiveState
     /**
      * Changes the first layer of the items in the copy list to p_new_layer.
      */
+    @Override
     public boolean change_layer_action(int p_new_layer)
     {
         if (logfile != null)
@@ -142,7 +144,7 @@ public class CopyItemState extends InteractiveState
         {
             return;
         }
-        Map<Padstack, Padstack> padstack_pairs = new TreeMap<Padstack, Padstack>(); // Contains old and new padstacks after layer change.
+        Map<Padstack, Padstack> padstack_pairs = new TreeMap<>(); // Contains old and new padstacks after layer change.
         
         RoutingBoard board = hdlg.get_routing_board();
         if (layer_changed)
@@ -163,10 +165,10 @@ public class CopyItemState extends InteractiveState
         // Copy the components of the old items and assign the new items to the copied components.
         
         /** Contailns the old and new id no of a copied component. */
-        Map<Integer, Integer> cmp_no_pairs = new TreeMap<Integer, Integer>();
+        Map<Integer, Integer> cmp_no_pairs = new TreeMap<>();
         
         /** Contains the new created components after copying. */
-        Collection<Component> copied_components = new LinkedList<Component>();
+//        Collection<Component> copied_components = new LinkedList<>();
         
         Vector translate_vector = current_position.difference_by(start_position);
         Iterator<Item> it = item_list.iterator();
@@ -178,12 +180,12 @@ public class CopyItemState extends InteractiveState
             {
                 //This item belongs to a component
                 int new_cmp_no;
-                Integer curr_key = Integer.valueOf(curr_cmp_no); //Ontobus
+                Integer curr_key = curr_cmp_no; //Ontobus
                 if (cmp_no_pairs.containsKey(curr_key))
                 {
                     // the new component for this pin is already created
                     Integer curr_value = cmp_no_pairs.get(curr_key);
-                    new_cmp_no = curr_value.intValue();
+                    new_cmp_no = curr_value;
                 }
                 else
                 {
@@ -220,9 +222,9 @@ public class CopyItemState extends InteractiveState
                     Component new_component =
                     board.components.add(new_location, old_component.get_rotation_in_degree(), 
                             old_component.placed_on_front(), new_package);
-                    copied_components.add(new_component);
+//                    copied_components.add(new_component);
                     new_cmp_no = new_component.no;
-                    cmp_no_pairs.put(Integer.valueOf(curr_cmp_no), Integer.valueOf(new_cmp_no)); //Ontobus
+                    cmp_no_pairs.put(curr_cmp_no, new_cmp_no); //Ontobus
                 }
                 curr_item.assign_component_no(new_cmp_no);
             }
@@ -265,12 +267,14 @@ public class CopyItemState extends InteractiveState
         hdlg.repaint();
     }
     
+    @Override
     public InteractiveState left_button_clicked(FloatPoint p_location)
     {
         insert();
         return this;
     }
     
+    @Override
     public InteractiveState process_logfile_point(FloatPoint p_location)
     {
         change_position(p_location);
@@ -278,6 +282,7 @@ public class CopyItemState extends InteractiveState
         return this;
     }
     
+    @Override
     public void draw(java.awt.Graphics p_graphics)
     {
         if (item_list == null)
@@ -293,6 +298,7 @@ public class CopyItemState extends InteractiveState
         }
     }
     
+    @Override
     public javax.swing.JPopupMenu get_popup_menu()
     {
         return hdlg.get_panel().popup_menu_copy;
@@ -334,7 +340,7 @@ public class CopyItemState extends InteractiveState
         return new_padstack;
     }
     
-    private Collection<Item> item_list;
+    private final Collection<Item> item_list;
     private Point start_position;
     private Point current_position;
     private int current_layer;

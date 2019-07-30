@@ -59,7 +59,7 @@ public class Logfile
                 this.pending_token = curr_ob;
                 return null;
             }
-            double f = ((Double) curr_ob).doubleValue();
+            double f = ((Double) curr_ob);
             if (i == 0)
             {
                 x = f;
@@ -223,7 +223,7 @@ public class Logfile
             this.pending_token = curr_ob;
             return -1;
         }
-        return (((Integer) curr_ob).intValue());
+        return (((Integer) curr_ob));
     }
     
     /**

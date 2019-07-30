@@ -46,6 +46,7 @@ public class Net implements Comparable<Net>, board.ObjectInfoPanel.Printable, ja
         net_class = p_net_list.get_board().rules.get_default_net_class();
     }
 
+    @Override
     public String toString()
     {
         return this.name;
@@ -55,6 +56,7 @@ public class Net implements Comparable<Net>, board.ObjectInfoPanel.Printable, ja
      * Compares 2 nets by name.
      * Useful for example to display nets in alphabetic order.
      */
+    @Override
     public int compareTo(Net p_other)
     {
         return this.name.compareToIgnoreCase(p_other.name);
@@ -77,7 +79,7 @@ public class Net implements Comparable<Net>, board.ObjectInfoPanel.Printable, ja
      */
     public java.util.Collection<Item> get_terminal_items()
     {
-        java.util.Collection<Item> result = new java.util.LinkedList<Item>();
+        java.util.Collection<Item> result = new java.util.LinkedList<>();
         board.BasicBoard board = this.net_list.get_board();
         java.util.Iterator<UndoableObjects.UndoableObjectNode> it = board.item_list.start_read_object();
         for (;;)
@@ -103,7 +105,7 @@ public class Net implements Comparable<Net>, board.ObjectInfoPanel.Printable, ja
      */
     public java.util.Collection<board.Pin> get_pins()
     {
-        java.util.Collection<board.Pin> result = new java.util.LinkedList<board.Pin>();
+        java.util.Collection<board.Pin> result = new java.util.LinkedList<>();
         board.BasicBoard board = this.net_list.get_board();
         java.util.Iterator<UndoableObjects.UndoableObjectNode> it = board.item_list.start_read_object();
         for (;;)
@@ -129,7 +131,7 @@ public class Net implements Comparable<Net>, board.ObjectInfoPanel.Printable, ja
      */
     public java.util.Collection<board.Item> get_items()
     {
-        java.util.Collection<board.Item> result = new java.util.LinkedList<board.Item>();
+        java.util.Collection<board.Item> result = new java.util.LinkedList<>();
         board.BasicBoard board = this.net_list.get_board();
         java.util.Iterator<UndoableObjects.UndoableObjectNode> it = board.item_list.start_read_object();
         for (;;)
@@ -198,12 +200,13 @@ public class Net implements Comparable<Net>, board.ObjectInfoPanel.Printable, ja
         return contains_plane;
     }
 
+    @Override
     public void print_info(board.ObjectInfoPanel p_window, java.util.Locale p_locale)
     {
         Integer via_count = this.get_via_count();
         double cumulative_trace_length = this.get_trace_length();
         java.util.Collection<Item> terminal_items = this.get_terminal_items();
-        java.util.Collection<Printable> terminals = new java.util.LinkedList<Printable>();
+        java.util.Collection<Printable> terminals = new java.util.LinkedList<>();
         terminals.addAll(terminal_items);
         Integer terminal_item_count = terminals.size();
 

@@ -335,12 +335,12 @@ public class Network extends ScopeKeyword
         boolean scope_is_empty = (next_token == CLOSED_BRACKET);
         if (next_token instanceof Integer)
         {
-            subnet_number = ((Integer) next_token).intValue();
+            subnet_number = ((Integer) next_token);
         }
         boolean pin_order_found = false;
-        Collection<Net.Pin> pin_list = new LinkedList<Net.Pin>();
-        Collection<Rule> net_rules = new LinkedList<Rule>();
-        Collection<Collection<Net.Pin>> subnet_pin_lists = new LinkedList<Collection<Net.Pin>>();
+        Collection<Net.Pin> pin_list = new LinkedList<>();
+        Collection<Rule> net_rules = new LinkedList<>();
+        Collection<Collection<Net.Pin>> subnet_pin_lists = new LinkedList<>();
         if (!scope_is_empty)
         {
             for (;;)

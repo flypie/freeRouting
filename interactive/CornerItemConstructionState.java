@@ -42,6 +42,7 @@ public class CornerItemConstructionState extends InteractiveState
     /**
      * adds a corner to the polygon of the item under construction
      */
+    @Override
     public InteractiveState left_button_clicked(FloatPoint p_location)
     {
         return add_corner(p_location);
@@ -63,6 +64,7 @@ public class CornerItemConstructionState extends InteractiveState
         return this;
     }
     
+    @Override
     public InteractiveState process_logfile_point(FloatPoint p_point)
     {
         return add_corner(p_point);
@@ -71,6 +73,7 @@ public class CornerItemConstructionState extends InteractiveState
     /**
      * stores the location of the mouse pointer after snapping it to the snap_angle
      */
+    @Override
     public InteractiveState mouse_moved()
     {
         super.mouse_moved();
@@ -81,6 +84,7 @@ public class CornerItemConstructionState extends InteractiveState
     }
     
     
+    @Override
     public javax.swing.JPopupMenu get_popup_menu()
     {
         return hdlg.get_panel().popup_menu_corneritem_construction;
@@ -89,6 +93,7 @@ public class CornerItemConstructionState extends InteractiveState
     /**
      * draws the polygon constructed so far as a visual aid
      */
+    @Override
     public void draw(java.awt.Graphics p_graphics)
     {
         int corner_count = corner_list.size();
@@ -146,7 +151,7 @@ public class CornerItemConstructionState extends InteractiveState
     private IntPoint snap(IntPoint p_point)
     {
         IntPoint result;
-        boolean list_empty = (corner_list.size() == 0);
+        boolean list_empty = (corner_list.isEmpty());
         if (hdlg.get_routing_board().rules.get_trace_angle_restriction() == AngleRestriction.NINETY_DEGREE && !list_empty)
         {
             IntPoint last_corner = corner_list.getLast();
@@ -167,7 +172,7 @@ public class CornerItemConstructionState extends InteractiveState
     /**
      * stored corners of the shape of the item under construction
      */
-    protected java.util.LinkedList<IntPoint> corner_list = new java.util.LinkedList<IntPoint>();
+    protected java.util.LinkedList<IntPoint> corner_list = new java.util.LinkedList<>();
     
     protected FloatPoint snapped_mouse_position;
     protected boolean observers_activated = false;

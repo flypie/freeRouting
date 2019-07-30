@@ -104,7 +104,7 @@ public class AutorouteControl
         else
         {
             trace_clearance_class_no = 1;
-            via_rule = p_board.rules.via_rules.firstElement();
+            via_rule = p_board.rules.via_rules.get(0);
             curr_net_class = null;
         }
         for (int i = 0; i < layer_count; ++i)

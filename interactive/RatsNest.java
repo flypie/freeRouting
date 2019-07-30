@@ -23,7 +23,8 @@ package interactive;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Iterator;
-import java.util.Vector;
+//import java.util.Vector;
+import java.util.ArrayList;
 
 import java.awt.Graphics;
 
@@ -52,10 +53,10 @@ public class RatsNest
         this.locale = p_locale;
         int max_net_no = p_board.rules.nets.max_net_no();
         // Create the net item lists at once for performance reasons.
-        Vector<Collection<Item>> net_item_lists = new  Vector<Collection<Item>>(max_net_no);
+        var net_item_lists = new  ArrayList<Collection<Item>>(max_net_no);
         for (int i = 0; i < max_net_no; ++i)
         {
-            net_item_lists.add(new LinkedList<Item>());
+            net_item_lists.add(new LinkedList<>());
         }
         Iterator<UndoableObjects.UndoableObjectNode> it = p_board.item_list.start_read_object();
         for(;;)
@@ -102,7 +103,7 @@ public class RatsNest
         if (p_net_no >= 1 && p_net_no <= net_incompletes.length)
         {
             // copy p_item_list, because it will be changed inside the constructor of NetIncompletes
-            Collection<Item> item_list = new LinkedList<Item>(p_item_list);
+            Collection<Item> item_list = new LinkedList<>(p_item_list);
             net_incompletes[p_net_no - 1] = new NetIncompletes(p_net_no, item_list, p_board, locale);
         }
     }
@@ -255,11 +256,13 @@ public class RatsNest
             this.locale = p_locale;
         }
         
+        @Override
         public int compareTo(AirLine p_other)
         {
             return this.net.name.compareTo(p_other.net.name);
         }
         
+        @Override
         public String toString()
         {
             
@@ -296,6 +299,7 @@ public class RatsNest
             return result;
         }
         
+        @Override
         public void print_info(board.ObjectInfoPanel p_window, java.util.Locale p_locale)
         {
             java.util.ResourceBundle resources =

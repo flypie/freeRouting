@@ -114,6 +114,7 @@ public class WindowManualRules extends BoardSavableSubWindow
     /**
      * Recalculates the values in the trace width fields.
      */
+    @Override
     public void refresh()
     {
         board.RoutingBoard routing_board = board_handling.get_routing_board();

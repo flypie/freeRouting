@@ -50,6 +50,7 @@ import board.Unit;
 import board.TestLevel;
 
 import designformats.specctra.DsnFile;
+import java.io.IOException;
 
 /**
  *
@@ -392,23 +393,21 @@ public class BoardHandling
      */
     public void set_manual_trace_half_width(int p_layer_no, int p_value)
     {
-        if (p_layer_no == gui.ComboBoxLayer.ALL_LAYER_INDEX)
+        switch (p_layer_no)
         {
-            for (int i = 0; i < settings.manual_trace_half_width_arr.length; ++i)
-            {
-                this.settings.set_manual_trace_half_width(i, p_value);
-            }
-        }
-        else if (p_layer_no == gui.ComboBoxLayer.INNER_LAYER_INDEX)
-        {
-            for (int i = 1; i < settings.manual_trace_half_width_arr.length - 1; ++i)
-            {
-                this.settings.set_manual_trace_half_width(i, p_value);
-            }
-        }
-        else
-        {
-            this.settings.set_manual_trace_half_width(p_layer_no, p_value);
+            case gui.ComboBoxLayer.ALL_LAYER_INDEX:
+                for (int i = 0; i < settings.manual_trace_half_width_arr.length; ++i)
+                {
+                    this.settings.set_manual_trace_half_width(i, p_value);
+                }   break;
+            case gui.ComboBoxLayer.INNER_LAYER_INDEX:
+                for (int i = 1; i < settings.manual_trace_half_width_arr.length - 1; ++i)
+                {
+                    this.settings.set_manual_trace_half_width(i, p_value);
+                }   break;
+            default:
+                this.settings.set_manual_trace_half_width(p_layer_no, p_value);
+                break;
         }
     }
 
@@ -446,7 +445,7 @@ public class BoardHandling
         if (clearance_violations == null)
         {
             clearance_violations = new ClearanceViolations(this.board.get_items());
-            Integer violation_count = Integer.valueOf((clearance_violations.list.size() + 1) / 2); //Ontobus
+            Integer violation_count = (clearance_violations.list.size() + 1) / 2; //Ontobus
             String curr_message = violation_count.toString() + " " + resources.getString("clearance_violations_found");
             screen_messages.set_status_message(curr_message);
         }
@@ -760,7 +759,7 @@ public class BoardHandling
         {
             return;
         }
-        java.util.Set<Integer> changed_nets = new java.util.TreeSet<Integer>();
+        java.util.Set<Integer> changed_nets = new java.util.TreeSet<>();
         if (board.undo(changed_nets))
         {
             for (Integer changed_net : changed_nets)
@@ -792,7 +791,7 @@ public class BoardHandling
         {
             return;
         }
-        java.util.Set<Integer> changed_nets = new java.util.TreeSet<Integer>();
+        java.util.Set<Integer> changed_nets = new java.util.TreeSet<>();
         if (board.redo(changed_nets))
         {
             for (Integer changed_net : changed_nets)
@@ -1056,7 +1055,7 @@ public class BoardHandling
             coordinate_transform = (CoordinateTransform) p_design.readObject();
             graphics_context = (GraphicsContext) p_design.readObject();
         }
-        catch (Exception e)
+        catch (IOException | ClassNotFoundException e)
         {
             return false;
         }
@@ -1165,7 +1164,7 @@ public class BoardHandling
             p_object_stream.writeObject(coordinate_transform);
             p_object_stream.writeObject(graphics_context);
         }
-        catch (Exception e)
+        catch (IOException e)
         {
             screen_messages.set_status_message(resources.getString("save_error"));
             result = false;
@@ -1700,7 +1699,7 @@ public class BoardHandling
     {
         IntPoint location = p_location.round();
         java.util.Set<Item> result = board.pick_items(location, settings.layer, p_item_filter);
-        if (result.size() == 0 && settings.select_on_all_visible_layers)
+        if (result.isEmpty() && settings.select_on_all_visible_layers)
         {
             for (int i = 0; i < graphics_context.layer_count(); ++i)
             {

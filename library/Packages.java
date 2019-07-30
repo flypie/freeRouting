@@ -21,7 +21,8 @@
 package library;
 
 import java.util.Iterator;
-import java.util.Vector;
+//import java.util.Vector;
+import java.util.ArrayList;
 
 import geometry.planar.Shape;
 
@@ -71,7 +72,7 @@ public class Packages implements java.io.Serializable
      */
     public Package get(int p_package_no)
     {
-        Package result = package_arr.elementAt(p_package_no - 1);
+        Package result = package_arr.get(p_package_no - 1);
         if (result != null && result.no != p_package_no)
         {
             System.out.println("Padstacks.get: inconsistent padstack number");
@@ -113,7 +114,7 @@ public class Packages implements java.io.Serializable
     }
     
     /** The array of packages in this object */
-    private Vector<Package> package_arr = new Vector<Package>();
+    private ArrayList<Package> package_arr = new ArrayList<>();
     
     final Padstacks padstack_list;
 }

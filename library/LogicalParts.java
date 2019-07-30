@@ -20,7 +20,8 @@
 
 package library;
 
-import java.util.Vector;
+//import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * The logical parts contain information for gate swap and pin swap.
@@ -58,7 +59,7 @@ public class LogicalParts implements java.io.Serializable
      */
     public LogicalPart get(int p_part_no)
     {
-        LogicalPart result = part_arr.elementAt(p_part_no - 1);
+        LogicalPart result = part_arr.get(p_part_no - 1);
         if (result != null && result.no != p_part_no)
         {
             System.out.println("LogicalParts.get: inconsistent part number");
@@ -75,5 +76,5 @@ public class LogicalParts implements java.io.Serializable
     }
     
     /** The array of logical parts */
-    private Vector<LogicalPart> part_arr = new Vector<LogicalPart>();
+    private ArrayList<LogicalPart> part_arr = new ArrayList<>();
 }

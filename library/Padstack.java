@@ -54,6 +54,7 @@ public class Padstack implements Comparable<Padstack>, board.ObjectInfoPanel.Pri
      * Compares 2 padstacks by name.
      * Useful for example to display padstacks in alphabetic order.
      */
+    @Override
     public int compareTo(Padstack p_other)
     {
         return this.name.compareToIgnoreCase(p_other.name);
@@ -104,6 +105,7 @@ public class Padstack implements Comparable<Padstack>, board.ObjectInfoPanel.Pri
         return shapes.length;
     }
     
+    @Override
     public String toString()
     {
         return this.name;
@@ -116,7 +118,7 @@ public class Padstack implements Comparable<Padstack>, board.ObjectInfoPanel.Pri
      */
     public java.util.Collection<Direction> get_trace_exit_directions(int p_layer, double p_factor)
     {
-        java.util.Collection<Direction> result = new java.util.LinkedList<Direction>();
+        java.util.Collection<Direction> result = new java.util.LinkedList<>();
         if (p_layer < 0 || p_layer >= shapes.length)
         {
             return result;
@@ -152,6 +154,7 @@ public class Padstack implements Comparable<Padstack>, board.ObjectInfoPanel.Pri
         return result;
     }
     
+    @Override
     public void print_info(board.ObjectInfoPanel p_window, java.util.Locale p_locale)
     {
         java.util.ResourceBundle resources = 

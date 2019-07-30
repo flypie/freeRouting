@@ -57,25 +57,18 @@ class BoardToolbar extends javax.swing.JPanel
         javax.swing.ImageIcon autoroutingIcon = new javax.swing.ImageIcon(getClass().getResource("/gui/resources/netautorouteicon.png"));
         autoroutingButton = new javax.swing.JToggleButton(autoroutingIcon);
         autoroutingButton.setToolTipText("starts autorouting of the complete PCB");
-        autoroutingButton.addActionListener(new java.awt.event.ActionListener()
+        autoroutingButton.addActionListener((java.awt.event.ActionEvent evt) ->
         {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-
-                board_frame.board_panel.board_handling.start_batch_autorouter();
-            }
+            board_frame.board_panel.board_handling.start_batch_autorouter();
         });
         routingPanel.add(autoroutingButton);
 
         javax.swing.ImageIcon routingIcon = new javax.swing.ImageIcon(getClass().getResource("/gui/resources/netrouteicon.png"));
         routingButton = new javax.swing.JToggleButton(routingIcon);
         routingButton.setToolTipText("activates the manual routing mode");
-        routingButton.addActionListener(new java.awt.event.ActionListener()
+        routingButton.addActionListener((java.awt.event.ActionEvent evt) ->
         {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                board_frame.board_panel.board_handling.set_route_menu_state();
-            }
+            board_frame.board_panel.board_handling.set_route_menu_state();
         });
         routingPanel.add(routingButton);
 
@@ -83,12 +76,9 @@ class BoardToolbar extends javax.swing.JPanel
         javax.swing.ImageIcon selectIcon = new javax.swing.ImageIcon(getClass().getResource("/gui/resources/selectediticon.png"));
         selectButton = new javax.swing.JToggleButton(selectIcon);
         selectButton.setToolTipText("activates the select/edit mode");
-        selectButton.addActionListener(new java.awt.event.ActionListener()
+        selectButton.addActionListener((java.awt.event.ActionEvent evt) ->
         {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                board_frame.board_panel.board_handling.set_select_menu_state();
-            }
+            board_frame.board_panel.board_handling.set_select_menu_state();
         });
         routingPanel.add(selectButton);
 
@@ -96,12 +86,9 @@ class BoardToolbar extends javax.swing.JPanel
         javax.swing.ImageIcon dragIcon = new javax.swing.ImageIcon(getClass().getResource("/gui/resources/dragicon.png"));
         dragButton = new javax.swing.JToggleButton(dragIcon);
         dragButton.setToolTipText("activates the drag mode to move components and routes");
-        dragButton.addActionListener(new java.awt.event.ActionListener()
+        dragButton.addActionListener((java.awt.event.ActionEvent evt) ->
         {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-               board_frame.board_panel.board_handling.set_drag_menu_state();
-            }
+            board_frame.board_panel.board_handling.set_drag_menu_state();
         });
         routingPanel.add(dragButton);
 
@@ -128,12 +115,9 @@ class BoardToolbar extends javax.swing.JPanel
         javax.swing.ImageIcon zoomFullIcon = new javax.swing.ImageIcon(getClass().getResource("/gui/resources/zoomfullicon.png"));
         javax.swing.JButton zoomAllButton = new javax.swing.JButton(zoomFullIcon);
         zoomAllButton.setToolTipText("zoom fit all");
-        zoomAllButton.addActionListener(new java.awt.event.ActionListener()
+        zoomAllButton.addActionListener((java.awt.event.ActionEvent evt) ->
         {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                board_frame.zoom_all();
-            }
+            board_frame.zoom_all();
         });
         zoomPanel.add(zoomAllButton);
 
@@ -142,6 +126,7 @@ class BoardToolbar extends javax.swing.JPanel
         zoomMouseButton.setToolTipText("zoom region by mouse");
         zoomMouseButton.addActionListener(new java.awt.event.ActionListener()
         {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
                 board_frame.board_panel.board_handling.zoom_region();
@@ -171,26 +156,20 @@ class BoardToolbar extends javax.swing.JPanel
         javax.swing.ImageIcon undoIcon = new javax.swing.ImageIcon(getClass().getResource("/gui/resources/undoicon.png"));
         final javax.swing.JButton undoButton = new javax.swing.JButton(undoIcon);
         undoButton.setToolTipText("undo last step");
-        undoButton.addActionListener(new java.awt.event.ActionListener()
+        undoButton.addActionListener((java.awt.event.ActionEvent evt) ->
         {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                board_frame.board_panel.board_handling.cancel_state();
-                board_frame.board_panel.board_handling.undo();
-                board_frame.refresh_windows();
-            }
+            board_frame.board_panel.board_handling.cancel_state();
+            board_frame.board_panel.board_handling.undo();
+            board_frame.refresh_windows();
         });
         undoPanel.add(undoButton);
 
         javax.swing.ImageIcon redoIcon = new javax.swing.ImageIcon(getClass().getResource("/gui/resources/redoicon.png"));
         final javax.swing.JButton redoButton = new javax.swing.JButton(redoIcon);
         redoButton.setToolTipText("redo last undo step");
-        redoButton.addActionListener(new java.awt.event.ActionListener()
+        redoButton.addActionListener((java.awt.event.ActionEvent evt) ->
         {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                board_frame.board_panel.board_handling.redo();
-            }
+            board_frame.board_panel.board_handling.redo();
         });
 
         undoPanel.add(redoButton);
@@ -229,6 +208,7 @@ class BoardToolbar extends javax.swing.JPanel
         unit_factor_field.setPreferredSize(new java.awt.Dimension(50, 18));
         unit_factor_field.addKeyListener(new java.awt.event.KeyAdapter()
         {
+            @Override
             public void keyTyped(java.awt.event.KeyEvent evt)
             {
                 if (evt.getKeyChar() == '\n')
@@ -259,14 +239,11 @@ class BoardToolbar extends javax.swing.JPanel
         unit_combo_box.setMinimumSize(new java.awt.Dimension(60, 18));
         unit_combo_box.setOpaque(false);
         unit_combo_box.setPreferredSize(new java.awt.Dimension(60, 18));
-        unit_combo_box.addActionListener(new java.awt.event.ActionListener()
+        unit_combo_box.addActionListener((java.awt.event.ActionEvent evt) ->
         {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                board.Unit new_unit = (board.Unit) unit_combo_box.getSelectedItem();
-                board_frame.board_panel.board_handling.change_user_unit(new_unit);
-                board_frame.refresh_windows();
-            }
+            board.Unit new_unit = (board.Unit) unit_combo_box.getSelectedItem();
+            board_frame.board_panel.board_handling.change_user_unit(new_unit);
+            board_frame.refresh_windows();
         });
 
         unitsPanel.add(unit_combo_box);

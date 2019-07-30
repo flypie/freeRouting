@@ -43,6 +43,7 @@ public class MainApplication extends javax.swing.JFrame
         boolean debugOption = false;
         boolean whiteBackground = false;
         boolean autoSaveSpectraSessionFileOnExit = false;
+        boolean autoroutesaveexit = false;
         String designFileName = null;
         String designDirName = null;
         java.util.Locale currentLocale = java.util.Locale.ENGLISH;
@@ -89,10 +90,16 @@ public class MainApplication extends javax.swing.JFrame
             {
                 whiteBackground = true;
             }
+            else if (p_args[i].startsWith("-asx"))
+            {
+                autoroutesaveexit = true;
+                autoSaveSpectraSessionFileOnExit = true;
+            }
             else if (p_args[i].startsWith("-h")||p_args[i].startsWith("--help"))
             {
                 System.out.println("FreeRouting version "+VERSION_NUMBER_STRING);
                 System.out.println("command line options are:");
+                System.out.println("-asx  autoroute save exit");
                 System.out.println("-de  provide design file");
                 System.out.println("-di  design folder used in file dialog");
                 System.out.println("-l   provide locale");
@@ -129,6 +136,7 @@ public class MainApplication extends javax.swing.JFrame
             }
             newFrame.addWindowListener(new java.awt.event.WindowAdapter()
             {
+                @Override
                 public void windowClosed(java.awt.event.WindowEvent evt)
                 {
                     Runtime.getRuntime().exit(0);
@@ -156,6 +164,7 @@ public class MainApplication extends javax.swing.JFrame
 
             newFrame.addWindowListener(new java.awt.event.WindowAdapter()
             {
+                @Override
                 public void windowClosed(java.awt.event.WindowEvent evt)
                 {
                     Runtime.getRuntime().exit(0);

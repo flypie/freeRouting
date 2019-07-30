@@ -21,7 +21,9 @@
 package library;
 
 import java.util.Iterator;
-import java.util.Vector;
+//import java.util.Vector;
+import java.util.ArrayList;
+
 
 import geometry.planar.ConvexShape;
 
@@ -37,7 +39,7 @@ public class Padstacks implements java.io.Serializable
     public Padstacks(board.LayerStructure p_layer_structure)
     {
         board_layer_structure = p_layer_structure;
-        padstack_arr = new Vector<Padstack>();
+        padstack_arr = new ArrayList<Padstack>();
     }
     
     /**
@@ -77,7 +79,7 @@ public class Padstacks implements java.io.Serializable
             System.out.println("Padstacks.get: 1 <= p_padstack_no <= " + padstack_count.toString() + " expected");
             return null;
         }
-        Padstack result = padstack_arr.elementAt(p_padstack_no - 1);
+        Padstack result = padstack_arr.get(p_padstack_no - 1);
         if (result != null && result.no != p_padstack_no)
         {
             System.out.println("Padstacks.get: inconsistent padstack number");
@@ -106,7 +108,7 @@ public class Padstacks implements java.io.Serializable
      */
     public Padstack add(ConvexShape [] p_shapes)
     {        
-        String new_name = "padstack#" + Integer.valueOf(padstack_arr.size() + 1).toString(); //ontobus
+        String new_name = "padstack#" + Integer.toString(padstack_arr.size() + 1); //ontobus
         return add(new_name, p_shapes, false, false);
     }
     
@@ -128,7 +130,7 @@ public class Padstacks implements java.io.Serializable
     }
     
     /** The array of Padstacks in this object */
-    private Vector<Padstack> padstack_arr;
+    private final ArrayList<Padstack> padstack_arr;
     
     /** The layer structure of each padstack. */
     public final board.LayerStructure board_layer_structure;

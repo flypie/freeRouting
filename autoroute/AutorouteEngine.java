@@ -381,7 +381,7 @@ public class AutorouteEngine
     public Collection<CompleteFreeSpaceExpansionRoom> complete_expansion_room(IncompleteFreeSpaceExpansionRoom p_room)
     {
 
-        try
+//        try
         {
             Collection<CompleteFreeSpaceExpansionRoom> result = new LinkedList<>();
             TileShape from_door_shape = null;
@@ -439,13 +439,13 @@ public class AutorouteEngine
                 }
             }
             return result;
-        } catch (Exception e)
+        } 
+/*        catch (Exception e)
         {
             System.out.print("AutorouteEngine.complete_expansion_room: ");
             System.out.println(e);
             return new LinkedList<>();
-        }
-
+        } */
     }
 
     /**

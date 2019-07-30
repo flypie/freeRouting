@@ -118,13 +118,14 @@ public abstract class DragState extends InteractiveState
     public abstract InteractiveState move_to(FloatPoint p_to_location);
     
     
+    @Override
     public InteractiveState mouse_dragged(FloatPoint p_point)
     {
         InteractiveState result = this.move_to(p_point);
         if (result != this)
         {
             // an error occured
-            java.util.Set<Integer> changed_nets = new java.util.TreeSet<Integer>();
+            java.util.Set<Integer> changed_nets = new java.util.TreeSet<>();
             hdlg.get_routing_board().undo(changed_nets);
             for (Integer changed_net : changed_nets)
             {
@@ -141,12 +142,14 @@ public abstract class DragState extends InteractiveState
         return result;
     }
     
+    @Override
     public InteractiveState complete()
     {
         return this.button_released();
     }
     
     
+    @Override
     public InteractiveState process_logfile_point(FloatPoint p_point)
     {
         return move_to(p_point);

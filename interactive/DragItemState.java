@@ -48,6 +48,7 @@ public class DragItemState extends DragState
     }
     
     
+    @Override
     public void display_default_message()
     {
         hdlg.screen_messages.set_status_message(resources.getString("dragging_item"));
@@ -58,6 +59,7 @@ public class DragItemState extends DragState
      * Return this.return_state, if an error eccured  while moving,
      * so that an undo may be necessary.
      */
+    @Override
     public InteractiveState move_to(FloatPoint p_to_location)
     {
         IntPoint to_location = p_to_location.round();
@@ -136,6 +138,7 @@ public class DragItemState extends DragState
         return this;
     }
     
+    @Override
     public InteractiveState button_released()
     {
         if (this.observers_activated)
@@ -160,19 +163,19 @@ public class DragItemState extends DragState
             else
             {
                 Collection<Item> moved_items =  hdlg.get_routing_board().get_component_items(item_to_move.get_component_no());
-                Set<Integer> changed_nets = new TreeSet<Integer>();
+                Set<Integer> changed_nets = new TreeSet<>();
                 Iterator<Item> it = moved_items.iterator();
                 while (it.hasNext())
                 {
                     Item curr_moved_item = it.next();
                     for (int i = 0; i < curr_moved_item.net_count(); ++i)
                     {
-                        changed_nets.add(Integer.valueOf(curr_moved_item.get_net_no(i)));  //Ontobus
+                        changed_nets.add(curr_moved_item.get_net_no(i));  //Ontobus
                     }
                 }
                 for (Integer curr_net_no : changed_nets)
                 {
-                    hdlg.update_ratsnest(curr_net_no.intValue());
+                    hdlg.update_ratsnest(curr_net_no);
                 }
             }
         }

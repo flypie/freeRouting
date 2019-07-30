@@ -55,7 +55,7 @@ public class MinAreaTree extends ShapeTree
      */
     public Set<Leaf> overlaps(RegularTileShape p_shape)
     {
-        Set<Leaf> found_overlaps = new TreeSet<Leaf>() ;
+        Set<Leaf> found_overlaps = new TreeSet<>() ;
         if (this.root == null)
         {
             return found_overlaps;
@@ -87,6 +87,7 @@ public class MinAreaTree extends ShapeTree
     }
     
     
+    @Override
     void insert(Leaf p_leaf)
     {
         ++this.leaf_count;
@@ -132,7 +133,7 @@ public class MinAreaTree extends ShapeTree
         }
     }
     
-    private final Leaf position_locate(TreeNode p_curr_node, Leaf p_leaf_to_insert)
+    private Leaf position_locate(TreeNode p_curr_node, Leaf p_leaf_to_insert)
     {
         TreeNode curr_node = p_curr_node;
         
@@ -167,6 +168,7 @@ public class MinAreaTree extends ShapeTree
     /**
      * removes an entry from this tree
      */
+    @Override
     public void remove_leaf(Leaf p_leaf)
     {
         if (p_leaf == null)
@@ -246,6 +248,6 @@ public class MinAreaTree extends ShapeTree
         }
     }
     
-    protected ArrayStack<TreeNode> node_stack = new ArrayStack<TreeNode> (10000);
+    protected ArrayStack<TreeNode> node_stack = new ArrayStack<> (10000);
 }
 

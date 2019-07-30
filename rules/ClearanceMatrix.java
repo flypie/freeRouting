@@ -388,7 +388,7 @@ public class ClearanceMatrix implements java.io.Serializable
     
     private final board.LayerStructure layer_structure;
     private Row [] row; // vector of class_count rows of the clearance matrix
-    private int [] max_value_on_layer; //  maximum clearance value for each layer
+    private final int [] max_value_on_layer; //  maximum clearance value for each layer
     
     
     /**
@@ -408,6 +408,7 @@ public class ClearanceMatrix implements java.io.Serializable
             max_value = new int[layer_structure.arr.length];
         }
         
+        @Override
         public void print_info(board.ObjectInfoPanel p_window, java.util.Locale p_locale)
         {
             java.util.ResourceBundle resources = 

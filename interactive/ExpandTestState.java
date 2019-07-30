@@ -151,22 +151,26 @@ public class ExpandTestState extends InteractiveState
         return result;
     }
 
+    @Override
     public InteractiveState left_button_clicked(FloatPoint p_location)
     {
         return cancel();
     }
 
+    @Override
     public InteractiveState cancel()
     {
         autoroute_engine.clear();
         return this.return_state;
     }
 
+    @Override
     public InteractiveState complete()
     {
         return cancel();
     }
 
+    @Override
     public void draw(java.awt.Graphics p_graphics)
     {
         autoroute_engine.draw(p_graphics, hdlg.graphics_context, 0.1);
@@ -233,14 +237,14 @@ public class ExpandTestState extends InteractiveState
         MazeSearchAlgo.Result search_result = this.maze_search_algo.find_connection();
         if (search_result != null)
         {
-            SortedSet<Item> ripped_item_list = new TreeSet<Item>();
+            SortedSet<Item> ripped_item_list = new TreeSet<>();
             this.autoroute_result =
                     LocateFoundConnectionAlgo.get_instance(search_result, control_settings,
                     this.autoroute_engine.autoroute_search_tree,
                     hdlg.get_routing_board().rules.get_trace_angle_restriction(),
                     ripped_item_list, board.TestLevel.ALL_DEBUGGING_OUTPUT);
             hdlg.get_routing_board().generate_snapshot();
-            SortedSet<Item> ripped_connections = new TreeSet<Item>();
+            SortedSet<Item> ripped_connections = new TreeSet<>();
             for (Item curr_ripped_item : ripped_item_list)
             {
                 ripped_connections.addAll(curr_ripped_item.get_connection_items(Item.StopConnectionOption.VIA));
