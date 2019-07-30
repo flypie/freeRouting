@@ -2,7 +2,7 @@ Changes over 1.3.1
 
 Some changes to improve peformance and updted to the latest recomended standards.  
 
-Some If/Else cascade to switched.
+Some If/Else cascade to switches.
 
 Change Vector to ArrayList.
 
