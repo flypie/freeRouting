@@ -1,3 +1,12 @@
+Changes over 1.3.1
+
+Some changes to improve peformance and updted to the latest recomended standards.  
+
+Some If/Else cascade to switched.
+Change Vector to ArrayList.
+Improve loop exiting.
+Add paramater -asx Autoroute Save eXit when set with -du will load autoroute and exit.
+
 FreeRouting
 ===========
 
