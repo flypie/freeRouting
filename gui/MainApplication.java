@@ -125,7 +125,7 @@ public class MainApplication extends javax.swing.JFrame
             }
             String message = resources.getString("loading_design") + " " + designFileName;
             WindowMessage welcomeWindow = WindowMessage.show(message);
-            final BoardFrame newFrame = createBoardFrame(designFile, autoSaveSpectraSessionFileOnExit, debugOption, currentLocale, whiteBackground);
+            final BoardFrame newFrame = createBoardFrame(designFile, autoSaveSpectraSessionFileOnExit, debugOption, currentLocale, whiteBackground, autoroutesaveexit);
             welcomeWindow.dispose();
             if (newFrame == null)
             {
@@ -134,14 +134,22 @@ public class MainApplication extends javax.swing.JFrame
                 System.out.println(" " + resources.getString("message_7"));
                 Runtime.getRuntime().exit(1);
             }
-            newFrame.addWindowListener(new java.awt.event.WindowAdapter()
+            
+            if(autoSaveSpectraSessionFileOnExit)
             {
-                @Override
-                public void windowClosed(java.awt.event.WindowEvent evt)
+                newFrame.board_panel.board_handling.start_batch_autorouter();
+            }
+            else
+            {
+                newFrame.addWindowListener(new java.awt.event.WindowAdapter()
                 {
-                    Runtime.getRuntime().exit(0);
-                }
-            });
+                    @Override
+                    public void windowClosed(java.awt.event.WindowEvent evt)
+                    {
+                        Runtime.getRuntime().exit(0);
+                    }
+                });
+            }
         }
         else
         {
@@ -158,7 +166,7 @@ public class MainApplication extends javax.swing.JFrame
             String message = resources.getString("loading_design") + " " + designFile.get_name();
             WindowMessage welcomeWindow = WindowMessage.show(message);
             welcomeWindow.setTitle(message);
-            BoardFrame newFrame = createBoardFrame(designFile, autoSaveSpectraSessionFileOnExit, debugOption, currentLocale, whiteBackground);
+            BoardFrame newFrame = createBoardFrame(designFile, autoSaveSpectraSessionFileOnExit, debugOption, currentLocale, whiteBackground, autoroutesaveexit);
             welcomeWindow.dispose();
             if (newFrame == null) Runtime.getRuntime().exit(1);
 
@@ -181,7 +189,7 @@ public class MainApplication extends javax.swing.JFrame
      * Returns null, if an error occured.
      */
     static private BoardFrame createBoardFrame(DesignFile designFile,
-            boolean autoSaveSpectraSessionFileOnExit, boolean debugOption, java.util.Locale currentLocale, boolean whiteBackground)
+            boolean autoSaveSpectraSessionFileOnExit, boolean debugOption, java.util.Locale currentLocale, boolean whiteBackground, boolean autoroutesaveexit)
     {
         java.util.ResourceBundle resources = java.util.ResourceBundle.getBundle("gui.resources.MainApplication", currentLocale);
 
@@ -192,7 +200,7 @@ public class MainApplication extends javax.swing.JFrame
         if (debugOption) testLevel = TestLevel.CRITICAL_DEBUGGING_OUTPUT;
         else testLevel = TestLevel.RELEASE_VERSION;
 
-        BoardFrame newFrame = new BoardFrame(designFile, autoSaveSpectraSessionFileOnExit, testLevel, currentLocale, whiteBackground);
+        BoardFrame newFrame = new BoardFrame(designFile, autoSaveSpectraSessionFileOnExit, testLevel, currentLocale, whiteBackground, autoroutesaveexit);
         boolean read_ok = newFrame.read(inputStream, designFile.is_created_from_text_file(), null);
         if (!read_ok)  return null;
 

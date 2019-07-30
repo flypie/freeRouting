@@ -38,7 +38,14 @@ import designformats.specctra.DsnFile;
 public class BoardFrame extends javax.swing.JFrame
 {
    private static final long serialVersionUID = 7524472765628777220L;
-    
+   
+    /**
+     *
+     */
+    public void WriteSpecctra()
+    {
+        design_file.write_specctra_session_file(menubar.file_menu.board_frame);
+    }
     
     /**
      * Creates new form BoardFrame.
@@ -46,11 +53,11 @@ public class BoardFrame extends javax.swing.JFrame
      * Also the warning output depends on p_test_level.
      */
     public BoardFrame(DesignFile p_design, boolean autoSaveSpectraSessionFileOnExit_, TestLevel p_test_level,
-            java.util.Locale p_locale, boolean whiteBackground)
+            java.util.Locale p_locale, boolean whiteBackground, boolean p_autoroutesaveexit)
     {
         this(p_design, autoSaveSpectraSessionFileOnExit_ , p_test_level,
                 new board.BoardObserverAdaptor(), new board.ItemIdNoGenerator(),
-                p_locale, whiteBackground);
+                p_locale, whiteBackground, p_autoroutesaveexit);
     }
     
     /**
@@ -59,7 +66,7 @@ public class BoardFrame extends javax.swing.JFrame
      * if the frame is embedded into a host system,
      */
     BoardFrame(DesignFile p_design, boolean autoSaveSpectraSessionFileOnExit_, TestLevel p_test_level, BoardObservers p_observers,
-            datastructures.IdNoGenerator p_item_id_no_generator, java.util.Locale p_locale, boolean whiteBackground)
+            datastructures.IdNoGenerator p_item_id_no_generator, java.util.Locale p_locale, boolean whiteBackground, boolean p_autoroutesaveexit)
     {
         this.design_file = p_design;
         this.test_level = p_test_level;
@@ -71,6 +78,9 @@ public class BoardFrame extends javax.swing.JFrame
         BoardMenuBar curr_menubar;
         this.autoSaveSpectraSessionFileOnExit = autoSaveSpectraSessionFileOnExit_;
         curr_menubar = BoardMenuBar.get_instance(this, autoSaveSpectraSessionFileOnExit);
+        
+        
+        this.autoroutesaveexit=p_autoroutesaveexit;
 
         this.menubar = curr_menubar;
         setJMenuBar(this.menubar);
@@ -608,6 +618,16 @@ public class BoardFrame extends javax.swing.JFrame
         }
     }
     
+    /**
+     *
+     * @return
+     */
+    public boolean Getautoroutesaveexit()
+    {
+        return autoroutesaveexit;
+    }
+    
+    
     /** The scroll pane for the panel of the routing board. */
     final javax.swing.JScrollPane scroll_pane;
     
@@ -635,7 +655,10 @@ public class BoardFrame extends javax.swing.JFrame
     
     private final java.util.ResourceBundle resources;
     private java.util.Locale locale;
+    
     private boolean autoSaveSpectraSessionFileOnExit;
+
+    private boolean autoroutesaveexit;
     
     private final BoardObservers  board_observers;
     private final datastructures.IdNoGenerator item_id_no_generator;
@@ -673,6 +696,7 @@ public class BoardFrame extends javax.swing.JFrame
     
     
     DesignFile design_file = null;
+        
     
     static final String [] log_file_extensions = { "log" };
     

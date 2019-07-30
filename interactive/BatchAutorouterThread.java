@@ -110,6 +110,7 @@ public class BatchAutorouterThread extends InteractiveActionThread
                 hdlg.screen_messages.set_status_message(end_message);
             }
 
+          
             hdlg.set_board_read_only(saved_board_read_only);
             hdlg.update_ratsnest();
             if (!ratsnest_hidden_before)
@@ -125,6 +126,12 @@ public class BatchAutorouterThread extends InteractiveActionThread
         } catch (Exception e)
         {
 
+        }
+        
+        if(hdlg.get_panel().board_frame.Getautoroutesaveexit())
+        {
+            hdlg.get_panel().board_frame.WriteSpecctra();    
+            hdlg.get_panel().board_frame.dispose(); 
         }
     }
 

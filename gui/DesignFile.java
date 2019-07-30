@@ -221,7 +221,7 @@ public class DesignFile
             return false;
         }
 
-        if (WindowMessage.confirm(resources.getString("confirm")))
+        if (p_board_frame.Getautoroutesaveexit() || WindowMessage.confirm(resources.getString("confirm")))
         {
             return write_rules_file(design_name, p_board_frame.board_panel.board_handling);
         }
