@@ -131,7 +131,8 @@ public class BatchAutorouterThread extends InteractiveActionThread
         if(hdlg.get_panel().board_frame.Getautoroutesaveexit())
         {
             hdlg.get_panel().board_frame.WriteSpecctra();    
-            hdlg.get_panel().board_frame.dispose(); 
+            hdlg.get_panel().board_frame.dispose();
+            System.exit(0);
         }
     }
 
