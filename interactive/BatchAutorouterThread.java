@@ -132,7 +132,7 @@ public class BatchAutorouterThread extends InteractiveActionThread
         {
             hdlg.get_panel().board_frame.WriteSpecctra();    
             hdlg.get_panel().board_frame.dispose();
-            System.exit(0);
+            System.exit(0); //test
         }
     }
 
