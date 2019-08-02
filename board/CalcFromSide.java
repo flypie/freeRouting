@@ -113,7 +113,8 @@ public class CalcFromSide
         Line check_line = p_line_segment.get_line();
         FloatPoint first_corner = p_shape.corner_approx(0);
         Side prev_side = check_line.side_of(first_corner);
-        int front_side_no = -1;
+//        int front_side_no = -1;
+        int front_side_no = 0; //If we do not find anything better this is it. ontobus 99% sure this is right.
         
         for (int i = 1; i <= border_line_count; ++i)
         {
@@ -138,6 +139,7 @@ public class CalcFromSide
             }
             prev_side = next_side;
         }
+        
         if (front_side_no < 0)
         {
             System.out.println("CalcFromSide: start corner not found");
@@ -145,6 +147,7 @@ public class CalcFromSide
             border_intersection = null;
             return;
         }
+       
         if (p_shove_to_the_left)
         {
             this.no = (front_side_no + 2) % border_line_count;

@@ -53,7 +53,7 @@ public class BatchOptRoute
     /**
      * Optimize the route on the board.
      */
-    public void optimize_board()
+    public void optimize_board(int maxOptimiserIterrations)
     {
         if (routing_board.get_test_level() != TestLevel.RELEASE_VERSION)
         {
@@ -61,9 +61,10 @@ public class BatchOptRoute
         }
         boolean route_improved = true;
         int curr_pass_no = 0;
+        int i;
         use_increased_ripup_costs = true;
 
-        while (route_improved)
+        for (i=0; i<maxOptimiserIterrations && route_improved ;i++)
         {
             ++curr_pass_no;
             boolean with_prefered_directions = (curr_pass_no % 2 != 0); // to create more variations

@@ -65,7 +65,7 @@ public class BoardHandling
     /**
      * Creates a new BoardHandling
      */
-    public BoardHandling(gui.BoardPanel p_panel, java.util.Locale p_locale)
+    public BoardHandling(gui.BoardPanel p_panel, java.util.Locale p_locale, int p_maxOptimiserIterrations)
     {
         this.locale = p_locale;
         this.panel = p_panel;
@@ -73,6 +73,8 @@ public class BoardHandling
         this.logfile = new Logfile();
         this.set_interactive_state(SelectMenuState.get_instance(this, logfile));
         this.resources = java.util.ResourceBundle.getBundle("interactive.resources.BoardHandling", p_locale);
+ 
+        this.maxOptimiserIterrations=p_maxOptimiserIterrations;
     }
 
     /**
@@ -1820,4 +1822,6 @@ public class BoardHandling
     boolean paint_immediately = false;
     private final java.util.ResourceBundle resources;
     private final java.util.Locale locale;
+    
+    int maxOptimiserIterrations;
 }

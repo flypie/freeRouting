@@ -69,6 +69,7 @@ public class MazeSearchAlgo
         }
         else
         {
+            System.out.println("MazeSearchAlgo get_instance: Null");
             result = null;
         }
         return result;

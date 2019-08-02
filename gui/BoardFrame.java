@@ -53,11 +53,11 @@ public class BoardFrame extends javax.swing.JFrame
      * Also the warning output depends on p_test_level.
      */
     public BoardFrame(DesignFile p_design, boolean autoSaveSpectraSessionFileOnExit_, TestLevel p_test_level,
-            java.util.Locale p_locale, boolean whiteBackground, boolean p_autoroutesaveexit)
+            java.util.Locale p_locale, boolean whiteBackground, boolean p_autoroutesaveexit, Integer maxOptimiserIterrations)
     {
         this(p_design, autoSaveSpectraSessionFileOnExit_ , p_test_level,
                 new board.BoardObserverAdaptor(), new board.ItemIdNoGenerator(),
-                p_locale, whiteBackground, p_autoroutesaveexit);
+                p_locale, whiteBackground, p_autoroutesaveexit, maxOptimiserIterrations);
     }
     
     /**
@@ -66,7 +66,7 @@ public class BoardFrame extends javax.swing.JFrame
      * if the frame is embedded into a host system,
      */
     BoardFrame(DesignFile p_design, boolean autoSaveSpectraSessionFileOnExit_, TestLevel p_test_level, BoardObservers p_observers,
-            datastructures.IdNoGenerator p_item_id_no_generator, java.util.Locale p_locale, boolean whiteBackground, boolean p_autoroutesaveexit)
+            datastructures.IdNoGenerator p_item_id_no_generator, java.util.Locale p_locale, boolean whiteBackground, boolean p_autoroutesaveexit, int  p_maxOptimiserIterrations)
     {
         this.design_file = p_design;
         this.test_level = p_test_level;
@@ -102,7 +102,7 @@ public class BoardFrame extends javax.swing.JFrame
         this.scroll_pane.setVerifyInputWhenFocusTarget(false);
         this.add(scroll_pane, java.awt.BorderLayout.CENTER);
         
-        this.board_panel = new BoardPanel(screen_messages, this, p_locale,whiteBackground);
+        this.board_panel = new BoardPanel(screen_messages, this, p_locale,whiteBackground, p_maxOptimiserIterrations);
         this.scroll_pane.setViewportView(board_panel);
         
         this.setTitle(resources.getString("title"));

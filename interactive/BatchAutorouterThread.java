@@ -79,7 +79,7 @@ public class BatchAutorouterThread extends InteractiveActionThread
             {
                 String opt_message = resources.getString("batch_optimizer") + " " + resources.getString("stop_message");
                 hdlg.screen_messages.set_status_message(opt_message);
-                this.batch_opt_route.optimize_board();
+                this.batch_opt_route.optimize_board(hdlg.maxOptimiserIterrations);
                 String curr_message;
                 if (this.is_stop_requested())
                 {
