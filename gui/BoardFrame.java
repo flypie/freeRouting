@@ -21,12 +21,12 @@ import interactive.ScreenMessages;
 import java.io.File;
 
 import datastructures.FileFilter;
-import datastructures.IdNoGenerator;
 
 import board.TestLevel;
 import board.BoardObservers;
 
 import designformats.specctra.DsnFile;
+import java.io.IOException;
 
 /**
  *
@@ -105,7 +105,7 @@ public class BoardFrame extends javax.swing.JFrame
         this.board_panel = new BoardPanel(screen_messages, this, p_locale,whiteBackground, p_maxOptimiserIterrations);
         this.scroll_pane.setViewportView(board_panel);
         
-        this.setTitle(resources.getString("title"));
+        this.setTitle(resources.getString("title")+" "+design_file.get_name());
         this.addWindowListener(new WindowStateListener());
         
         this.pack();
@@ -154,7 +154,7 @@ public class BoardFrame extends javax.swing.JFrame
         }
         else
         {
-            java.io.ObjectInputStream object_stream = null;
+            java.io.ObjectInputStream object_stream;
             try
             {
                 object_stream = new java.io.ObjectInputStream(p_input_stream);
@@ -176,7 +176,11 @@ public class BoardFrame extends javax.swing.JFrame
                 frame_location = (java.awt.Point) object_stream.readObject();
                 frame_bounds = (java.awt.Rectangle) object_stream.readObject();
             }
-            catch (Exception e)
+            catch (IOException e)
+            {
+                return false;
+            }
+            catch (ClassNotFoundException e)
             {
                 return false;
             }
@@ -260,8 +264,8 @@ public class BoardFrame extends javax.swing.JFrame
         {
             return false;
         }
-        java.io.OutputStream output_stream = null;
-        java.io.ObjectOutputStream object_stream = null;
+        java.io.OutputStream output_stream;
+        java.io.ObjectOutputStream object_stream;
         try
         {
             output_stream = new java.io.FileOutputStream(this.design_file.get_output_file());
@@ -387,6 +391,7 @@ public class BoardFrame extends javax.swing.JFrame
     /**
      * Actions to be taken when this frame vanishes.
      */
+   @Override
     public void dispose()
     {
         for (int i = 0; i < this.permanent_subwindows.length; ++i)
@@ -692,7 +697,7 @@ public class BoardFrame extends javax.swing.JFrame
     static final int SUBWINDOW_COUNT = 24;
     BoardSavableSubWindow[] permanent_subwindows = new BoardSavableSubWindow[SUBWINDOW_COUNT];
     
-    java.util.Collection<BoardTemporarySubWindow> temporary_subwindows = new java.util.LinkedList<BoardTemporarySubWindow>();
+    java.util.Collection<BoardTemporarySubWindow> temporary_subwindows = new java.util.LinkedList<>();
     
     
     DesignFile design_file = null;
@@ -707,6 +712,7 @@ public class BoardFrame extends javax.swing.JFrame
     
     private class WindowStateListener extends java.awt.event.WindowAdapter
     {
+        @Override
         public void windowClosing(java.awt.event.WindowEvent evt)
         {
             setDefaultCloseOperation(DISPOSE_ON_CLOSE );
@@ -724,6 +730,7 @@ public class BoardFrame extends javax.swing.JFrame
             }
         }
         
+        @Override
         public void windowIconified(java.awt.event.WindowEvent evt)
         {
             for (int i = 0; i < permanent_subwindows.length; ++i)
@@ -739,6 +746,7 @@ public class BoardFrame extends javax.swing.JFrame
             }
         }
         
+        @Override
         public void windowDeiconified(java.awt.event.WindowEvent evt)
         {
             for (int i = 0; i < permanent_subwindows.length; ++i)

@@ -21,6 +21,7 @@
 package gui;
 
 import datastructures.FileFilter;
+import java.io.FileNotFoundException;
 
 /**
  *  File functionality
@@ -95,7 +96,7 @@ public class DesignFile
         try
         {
             result = new java.io.FileInputStream(this.input_file);
-        } catch (Exception e)
+        } catch (FileNotFoundException e)
         {
             result = null;
         }
@@ -171,7 +172,7 @@ public class DesignFile
             try
             {
                 output_stream = new java.io.FileOutputStream(new_file);
-            } catch (Exception e)
+            } catch (FileNotFoundException e)
             {
                 output_stream = null;
             }
@@ -204,7 +205,7 @@ public class DesignFile
         try
         {
             output_stream = new java.io.FileOutputStream(curr_output_file);
-        } catch (Exception e)
+        } catch (FileNotFoundException e)
         {
             output_stream = null;
         }
@@ -239,7 +240,7 @@ public class DesignFile
         try
         {
             output_stream = new java.io.FileOutputStream(rules_file);
-        } catch (java.io.IOException e)
+        } catch (FileNotFoundException e)
         {
             System.out.println("unable to create rules file");
             return false;
@@ -252,7 +253,7 @@ public class DesignFile
             interactive.BoardHandling p_board_handling, String p_confirm_message)
     {
 
-        boolean result = true;
+        boolean result;
         String rule_file_name = p_design_name + ".rules";
         boolean dsn_file_generated_by_host = p_board_handling.get_routing_board().communication.specctra_parser_info.dsn_file_generated_by_host;
         try
@@ -305,7 +306,7 @@ public class DesignFile
         try
         {
             output_stream = new java.io.FileOutputStream(curr_output_file);
-        } catch (Exception e)
+        } catch (FileNotFoundException e)
         {
             output_stream = null;
         }

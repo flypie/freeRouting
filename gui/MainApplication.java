@@ -47,8 +47,7 @@ public class MainApplication extends javax.swing.JFrame
         int     maxOptimiserIterrations = Integer.MAX_VALUE;
         String designFileName = null;
         String designDirName = null;
-        java.util.Locale currentLocale = java.util.Locale.ENGLISH;
-        for (int i = 0; i < p_args.length; ++i)
+        java.util.Locale currentLocale = java.util.Locale.ENGLISH;        for (int i = 0; i < p_args.length; ++i)
         {
             if (p_args[i].startsWith("-de"))
             // the design file is provided
