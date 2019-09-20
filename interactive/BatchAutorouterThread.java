@@ -50,6 +50,7 @@ public class BatchAutorouterThread extends InteractiveActionThread
     @Override
     protected void thread_action()
     {
+        setPriority(Thread.MAX_PRIORITY); //Gets kicked of a lot should have affinity set.
         try
         {
             java.util.ResourceBundle resources =
