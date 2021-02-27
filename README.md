@@ -10,6 +10,10 @@ Improve loop exiting.
 
 Add paramater -asx Autoroute Save eXit when set with -du will load autoroute, save and then exit.
 
+Add parameter -moi Maximum Optrermisation Iterations.
+
+
+
 FreeRouting
 ===========
 
