@@ -47,7 +47,7 @@ public class BoardPanel extends javax.swing.JPanel
     private static final long serialVersionUID = 7524472765628777155L;
     /** Creates a new BoardPanel in an Application */
     public BoardPanel(ScreenMessages p_screen_messages, BoardFrame p_board_frame,
-             java.util.Locale p_locale, boolean whiteBackground, int p_maxOptimiserIterrations )
+             java.util.Locale p_locale, boolean whiteBackground, int p_maxOptimiserIterrations, boolean p_FanOut )
     {
         screen_messages = p_screen_messages;
         try
@@ -61,10 +61,10 @@ public class BoardPanel extends javax.swing.JPanel
         }
         board_frame = p_board_frame;
         this.scroll_pane = board_frame.scroll_pane;
-        default_init(p_locale, whiteBackground, p_maxOptimiserIterrations);
+        default_init(p_locale, whiteBackground, p_maxOptimiserIterrations, p_FanOut);
     }
     
-    private void default_init(java.util.Locale p_locale,boolean whiteBackground,int p_maxOptimiserIterrations)
+    private void default_init(java.util.Locale p_locale,boolean whiteBackground,int p_maxOptimiserIterrations, boolean p_FanOut)
     {
         setLayout(new java.awt.BorderLayout());
         
@@ -117,7 +117,7 @@ public class BoardPanel extends javax.swing.JPanel
                 board_handling.mouse_wheel_moved(evt.getWheelRotation());
             }
         });
-        board_handling = new BoardHandling(this, p_locale, p_maxOptimiserIterrations);
+        board_handling = new BoardHandling(this, p_locale, p_maxOptimiserIterrations, p_FanOut);
         setAutoscrolls(true);
         this.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
     }

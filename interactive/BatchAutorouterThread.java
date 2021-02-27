@@ -43,8 +43,7 @@ public class BatchAutorouterThread extends InteractiveActionThread
         super(p_board_handling);
         AutorouteSettings autoroute_settings = p_board_handling.settings.autoroute_settings;
         this.batch_autorouter = new BatchAutorouter(this, !autoroute_settings.get_with_fanout(), true, autoroute_settings.get_start_ripup_costs());
-        this.batch_opt_route = new BatchOptRoute(this);
-
+        this.batch_opt_route = new BatchOptRoute(this);        
     }
 
     @Override

@@ -45,6 +45,7 @@ public class MainApplication extends javax.swing.JFrame
         boolean autoSaveSpectraSessionFileOnExit = false;
         boolean autoroutesaveexit = false;
         int     maxOptimiserIterrations = Integer.MAX_VALUE;
+        boolean FanOut=false;
         String designFileName = null;
         String designDirName = null;
         java.util.Locale currentLocale = java.util.Locale.ENGLISH;        for (int i = 0; i < p_args.length; ++i)
@@ -102,6 +103,10 @@ public class MainApplication extends javax.swing.JFrame
                     maxOptimiserIterrations = Integer.valueOf(p_args[i + 1]);
                 }
             }            
+            else if (p_args[i].startsWith("-fan"))
+            {
+                FanOut=true;
+            }            
             else if (p_args[i].startsWith("-h")||p_args[i].startsWith("--help"))
             {
                 System.out.println("FreeRouting version "+VERSION_NUMBER_STRING);
@@ -111,6 +116,7 @@ public class MainApplication extends javax.swing.JFrame
                 System.out.println("-di  design folder used in file dialog");
                 System.out.println("-l   provide locale");
                 System.out.println("-moi maxium optimisation interations");
+                System.out.println("-fan");
                 System.out.println("-s   spectra session file is automatic saved on exit");
                 System.out.println("-t   debug option");
                 System.out.println("-white   white background");
@@ -133,7 +139,7 @@ public class MainApplication extends javax.swing.JFrame
             }
             String message = resources.getString("loading_design") + " " + designFileName;
             WindowMessage welcomeWindow = WindowMessage.show(message);
-            final BoardFrame newFrame = createBoardFrame(designFile, autoSaveSpectraSessionFileOnExit, debugOption, currentLocale, whiteBackground, autoroutesaveexit, maxOptimiserIterrations);
+            final BoardFrame newFrame = createBoardFrame(designFile, autoSaveSpectraSessionFileOnExit, debugOption, currentLocale, whiteBackground, autoroutesaveexit, maxOptimiserIterrations,FanOut);
             welcomeWindow.dispose();
             if (newFrame == null)
             {
@@ -174,7 +180,7 @@ public class MainApplication extends javax.swing.JFrame
             String message = resources.getString("loading_design") + " " + designFile.get_name();
             WindowMessage welcomeWindow = WindowMessage.show(message);
             welcomeWindow.setTitle(message);
-            BoardFrame newFrame = createBoardFrame(designFile, autoSaveSpectraSessionFileOnExit, debugOption, currentLocale, whiteBackground, autoroutesaveexit, maxOptimiserIterrations);
+            BoardFrame newFrame = createBoardFrame(designFile, autoSaveSpectraSessionFileOnExit, debugOption, currentLocale, whiteBackground, autoroutesaveexit, maxOptimiserIterrations, FanOut);
             welcomeWindow.dispose();
             if (newFrame == null) Runtime.getRuntime().exit(1);
 
@@ -197,7 +203,7 @@ public class MainApplication extends javax.swing.JFrame
      * Returns null, if an error occured.
      */
     static private BoardFrame createBoardFrame(DesignFile designFile,
-            boolean autoSaveSpectraSessionFileOnExit, boolean debugOption, java.util.Locale currentLocale, boolean whiteBackground, boolean autoroutesaveexit, Integer maxOptimiserIterrations)
+            boolean autoSaveSpectraSessionFileOnExit, boolean debugOption, java.util.Locale currentLocale, boolean whiteBackground, boolean autoroutesaveexit, Integer maxOptimiserIterrations, boolean FanOut)
     {
         java.util.ResourceBundle resources = java.util.ResourceBundle.getBundle("gui.resources.MainApplication", currentLocale);
 
@@ -208,7 +214,7 @@ public class MainApplication extends javax.swing.JFrame
         if (debugOption) testLevel = TestLevel.CRITICAL_DEBUGGING_OUTPUT;
         else testLevel = TestLevel.RELEASE_VERSION;
 
-        BoardFrame newFrame = new BoardFrame(designFile, autoSaveSpectraSessionFileOnExit, testLevel, currentLocale, whiteBackground, autoroutesaveexit,maxOptimiserIterrations);
+        BoardFrame newFrame = new BoardFrame(designFile, autoSaveSpectraSessionFileOnExit, testLevel, currentLocale, whiteBackground, autoroutesaveexit,maxOptimiserIterrations, FanOut);
         boolean read_ok = newFrame.read(inputStream, designFile.is_created_from_text_file(), null);
         if (!read_ok)  return null;
 
@@ -223,6 +229,8 @@ public class MainApplication extends javax.swing.JFrame
             DesignFile.read_rules_file(name_parts[0], designFile.get_parent(), newFrame.board_panel.board_handling, confirm_import_rules_message);
             newFrame.refresh_windows();
         }
+        
+        newFrame.board_panel.board_handling.settings.autoroute_settings.set_with_fanout(FanOut); //Ontobus
         return newFrame;
     }
 

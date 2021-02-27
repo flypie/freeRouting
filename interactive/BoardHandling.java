@@ -65,7 +65,7 @@ public class BoardHandling
     /**
      * Creates a new BoardHandling
      */
-    public BoardHandling(gui.BoardPanel p_panel, java.util.Locale p_locale, int p_maxOptimiserIterrations)
+    public BoardHandling(gui.BoardPanel p_panel, java.util.Locale p_locale, int p_maxOptimiserIterrations, boolean p_FanOut)
     {
         this.locale = p_locale;
         this.panel = p_panel;
@@ -75,6 +75,7 @@ public class BoardHandling
         this.resources = java.util.ResourceBundle.getBundle("interactive.resources.BoardHandling", p_locale);
  
         this.maxOptimiserIterrations=p_maxOptimiserIterrations;
+
     }
 
     /**
@@ -615,7 +616,7 @@ public class BoardHandling
         double unit_factor = p_board_communication.coordinate_transform.board_to_dsn(1);
         this.coordinate_transform = new CoordinateTransform(1, p_board_communication.unit, unit_factor, p_board_communication.unit);
         this.settings = new Settings(this.board, this.logfile);
-
+        
         // create a graphics context for the board
         Dimension panel_size = panel.getPreferredSize();
         graphics_context = new GraphicsContext(p_bounding_box, panel_size, p_layer_structure, this.locale);
@@ -1824,4 +1825,5 @@ public class BoardHandling
     private final java.util.Locale locale;
     
     int maxOptimiserIterrations;
+    boolean FanOut;
 }
